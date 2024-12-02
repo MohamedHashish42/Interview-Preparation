@@ -17,6 +17,13 @@ Welcome to the **Interview Questions Repository**! This repository is designed t
 Inshallah, Iam going to expand the repository with new categories. 
 
 
+## References 
+- Search
+- Previous Interviews
+- Previous Courses
+- [Chat GPT](https://chatgpt.com/)
+
+
 
 
 
