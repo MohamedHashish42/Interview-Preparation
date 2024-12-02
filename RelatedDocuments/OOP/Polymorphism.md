@@ -60,14 +60,14 @@ foreach (var color in colors)
 ## Using Interfaces
 
 ```csharp
-public class IColor
+public interface IColor
 {
-    public void Display();
+    void Display();
 }
 
 public class Red : IColor
 {
-    public override void Display()
+    public void Display() 
     {
         Console.WriteLine("This is red color");
     }
@@ -75,7 +75,7 @@ public class Red : IColor
 
 public class Blue : IColor
 {
-    public override void Display()
+    public void Display()
     {
         Console.WriteLine("This is blue color");
     }
