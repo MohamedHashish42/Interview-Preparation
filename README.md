@@ -8,7 +8,7 @@
 Welcome to the **Interview Questions Repository**! This repository is designed to help developers prepare for interviews by covering essential topics in .NET development, including C#, OOP, and General .NET concepts.
 
 ## 📂 Categories
-
+- [C# Concepts and Key Features](./CSharpConceptsAndKeyFeatures.md)
 - [Object-Oriented Programming (OOP)](./OOP.md)
 
 
