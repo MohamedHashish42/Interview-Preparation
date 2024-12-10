@@ -7,6 +7,7 @@
 - [What is **Constructor Chaining**?](#ConstructorChaining)
 - [What are **getters** and **setters**?](#Getters-and-Setters)
 - [What are **access modifiers**?](#AccessModifiers)
+- [What is **event**?](#Event)
 - [What are the difference between **Inheritance** and **Composition**?](#Inheritance-and-Composition)
 - [What is **this** keyword?](#this-keyword)
 - [What is **base** keyword?](#base-keyword)
@@ -87,7 +88,7 @@ public class Car
 
 ```
 
-**Constructor Chaining with a Base Class:**
+**Constructor Chaining Within a Base Class:**
 ```csharp
 public class Vehicle
 {
@@ -192,6 +193,57 @@ public class Person
          private protected string model;
       }
    ```
+## What is **event**?  <a id="Event"></a>
+An event in C# is a way for a class to notify other classes or objects when something of interest happens. Event is based on delegate which define the method signature that the event handlers (subscriber methods) must match, allowing one or more methods (event handlers) to be invoked in response to an action.
+
+### Key Features of Events:
+1. **Encapsulation:**  
+   Events provide a mechanism for classes to expose notifications without revealing the internal logic.
+   
+2. **Publisher-Subscriber Model:**  
+   - A **publisher** defines an event and decides when to raise it.
+   - **Subscribers** (other objects) attach their methods (event handlers) to handle the event.
+
+### Syntax:
+
+#### Declaring an Event:
+
+```csharp
+public event EventHandler MyEvent;
+```
+
+#### Note 
+
+In C# you can use  EventHandler or Custom Event Arguments
+**EventHandler:**  
+   - Standard delegate type for events.
+   - Signature: `void Handler(object sender, EventArgs e)`
+
+**Custom Event Arguments:**  
+   To pass additional data with events, use a custom class inheriting from `EventArgs`:
+
+#### Raising an Event:
+```csharp
+protected virtual void OnMyEvent()
+{
+    MyEvent?.Invoke(this, EventArgs.Empty);
+}
+```
+
+#### Subscribing to an Event:
+Other classes can subscribe to the event:
+```csharp
+publisher.MyEvent += SubscriberMethod;
+```
+
+#### Unsubscribing from an Event:
+To detach a method:
+```csharp
+publisher.MyEvent -= SubscriberMethod;
+```
+
+### Examples
+[Event Examples](./RelatedDocuments/OOP/Event.md) 
 
 ## What are the difference between **Inheritance** and **Composition**?<a id=Inheritance-and-Composition></a>
 Inheritance and composition are two fundamental ways to achieve code reuse and establish relationships between classes in object-oriented programming, but they follow different approaches
