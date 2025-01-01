@@ -10,6 +10,7 @@ Welcome to the **Interview Questions Repository**! This repository is designed t
 ## 📂 Categories
 - [C# Concepts and Key Features](./CSharpConceptsAndKeyFeatures.md)
 - [Object-Oriented Programming (OOP)](./OOP.md)
+- [Language Integrated Query (LINQ)](./LINQ.md)
 
 
 
