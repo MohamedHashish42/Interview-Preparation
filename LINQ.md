@@ -1,5 +1,5 @@
 
-# LINQ
+# Language Integrated Query (LINQ)
 
 
 - [What Is **Linq**?](#What-Is-Linq)
