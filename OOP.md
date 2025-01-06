@@ -1,32 +1,33 @@
 
 
 # Object-Oriented Programming (OOP)
-- [What is **OOP**?](#What-Is-OOP)
-- [What is the difference between **Class** and **Object**](#Class-VS-Object)
-- [What is the difference between **instructor** and **destructor**?](#Instructor-VS-Destructor)
-- [What is **Constructor Chaining**?](#ConstructorChaining)
-- [What are **getters** and **setters**?](#Getters-and-Setters)
-- [What are **access modifiers**?](#AccessModifiers)
-- [What is **event**?](#Event)
-- [What are the difference between **Inheritance** and **Composition**?](#Inheritance-and-Composition)
-- [What is **this** keyword?](#this-keyword)
-- [What is **base** keyword?](#base-keyword)
-- [What is the **static** modifier?](#StaticModifier)
-- [What is **virtual** modifier?](#virtual-modifier)
-- [What is **abstract** modifier?](#abstract-modifier)
-- [What is the difference between **virtual** and **abstract**?](#virtual-VS-abstract)
-- [What is **sealed** modifier?](#sealed-modifier)
-- [What are **is** and **as** keywords](#is-as)
-- [What are **Downcasting** and down **Upcasting**?](#Downcasting-Upcasting)
-- [What is **Method Signature**?](#MethodSignature)
-- [What is **Method Overloading**?](#Overloading)
-- [What is **Method Overriding**?](#Overriding)
-- [What is the difference between **abstract class** and **interface**?](#AbstractClass-VS-Interface)
+
+- [What is **OOP** and What are its four pillars](#what-is-oop-and-what-are-its-four-pillars)
+- [What is the difference between **Class** and **Object**?](#what-is-the-difference-between-class-and-object)
+- [What is the difference between **Instructor** and **Destructor**?](#what-is-the-difference-between-instructor-and-destructor)
+- [What is **Constructor Chaining**?](#what-is-constructor-chaining)
+- [What are **Getters** and **Setters**?](#what-are-getters-and-setters)
+- [What are **Access Modifiers**?](#what-are-access-modifiers)
+- [What is **Event**?](#what-is-event)
+- [What are the differences between **Inheritance** and **Composition**?](#what-are-the-differences-between-inheritance-and-composition)
+- [What is the **this** keyword?](#what-is-the-this-keyword)
+- [What is the **base** keyword?](#what-is-the-base-keyword)
+- [What is the **static** modifier?](#what-is-the-static-modifier)
+- [What is the **virtual** modifier?](#what-is-the-virtual-modifier)
+- [What is the **abstract** modifier?](#what-is-the-abstract-modifier)
+- [What is the difference between **virtual** and **abstract**?](#what-is-the-difference-between-virtual-and-abstract)
+- [What is the **sealed** modifier?](#what-is-the-sealed-modifier)
+- [What are the **is** and **as** keywords?](#what-are-the-is-and-as-keywords)
+- [What are **Downcasting** and **Upcasting**?](#what-are-downcasting-and-upcasting)
+- [What is the **Method Signature**?](#what-is-the-method-signature)
+- [What is the **Method Overloading**?](#what-is-the-method-overloading)
+- [What is the **Method Overriding**?](#what-is-the-method-overriding)
+- [What is the difference between **abstract class** and **interface**?](#what-is-the-difference-between-abstract-class-and-interface)
 
 
 
 
-## What is **OOP** and What are its four pillars? <a id="What-Is-OOP"></a>
+## What is **OOP** and What are its four pillars?
 **Object-Oriented Programming (OOP)** is a programming paradigm based on the concept of **objects**, which contain data (properties) and behavior (methods). 
 
 The main principles of OOP are:
@@ -44,13 +45,13 @@ Classes can implement a common interface, ensuring they all provide specific met
 4. [**Abstraction**](./RelatedDocuments/OOP/Abstraction.md): Hiding the complexity of the system and showing only essential features.
 
 
-## What is the difference between **Class** and **Object**? <a id="Class-VS-Object"></a>
+## What is the difference between **Class** and **Object**? 
 A **class** is a blueprint or template for creating objects. It defines data (properties) and behavior (methods) that the objects created from the class will have. It does not hold data itself.
 
 An **object** is an instance of a class. It holds actual data and can use the methods in defined in its class.
 
 
-## What is the difference between **instructor** and **destructor**? <a id="Instructor-VS-Destructor"></a>
+## What is the difference between **instructor** and **destructor**?
 **Constructor**:
 - A special method in a class used to initialize objects.
 - It is automatically called when an object is created.
@@ -61,7 +62,7 @@ An **object** is an instance of a class. It holds actual data and can use the me
 - It is automatically called by the garbage collector.
 - Cannot be overloaded and is rarely used in C# due to automatic memory management.
 
-## What is **Constructor Chaining**?<a id="ConstructorChaining"></a>
+## What is **Constructor Chaining**?
 Constructor chaining is a technique where one constructor calls another constructor in the same class or in a base class to reuse code and avoid duplication.
 
 ### Usage 
@@ -110,7 +111,7 @@ public class Car : Vehicle
 ```
 
 
-## What are **getters** and **setters**?<a id="Getters-and-Setters"></a>
+## What are **getters** and **setters**?
 
 A **getter** and **setter** (also known as accessors) are special methods that allow you to control access to a class's properties. They define how a property's value can be read and modified.
 
@@ -158,7 +159,7 @@ public class Person
 
 
 
-## What are **access modifiers**? <a id="AccessModifiers"></a>
+## What are **access modifiers**?
 
 **Access modifiers** in C# are keywords that determine the **accessibility** of member or a type. They control which parts of the program can see or use a particular member.
 
@@ -193,7 +194,7 @@ public class Person
          private protected string model;
       }
    ```
-## What is **event**?  <a id="Event"></a>
+## What is **Event**?
 An event in C# is a way for a class to notify other classes or objects when something of interest happens. Event is based on delegate which define the method signature that the event handlers (subscriber methods) must match, allowing one or more methods (event handlers) to be invoked in response to an action.
 
 ### Key Features of Events:
@@ -245,7 +246,7 @@ publisher.MyEvent -= SubscriberMethod;
 ### Examples
 [Event Examples](./RelatedDocuments/OOP/Event.md) 
 
-## What are the difference between **Inheritance** and **Composition**?<a id=Inheritance-and-Composition></a>
+## What are the differences between **Inheritance** and **Composition**?
 Inheritance and composition are two fundamental ways to achieve code reuse and establish relationships between classes in object-oriented programming, but they follow different approaches
 
 I'll convert the key differences into a clear table format: 
@@ -331,7 +332,7 @@ public class Car
 ```
 
 
-## What is **this** keyword?<a id=this-keyword></a>
+## What is the **this** keyword?
 The **this** keyword in C# is a reference to the current instance of the class.  
 It is used within a class to refer to the instance members (fields, methods, properties, or constructors) of that class.
 
@@ -340,8 +341,7 @@ It is used within a class to refer to the instance members (fields, methods, pro
 1. **Access Instance Members**: The `this` keyword is used to distinguish between instance members and parameters or local variables with the same name.
 2. **Constructor Chaining**: It can be used to call another constructor in the same class, enabling constructor chaining.
 3. **Pass Current Instance**: It can be passed as an argument to other methods or constructors to refer to the current object.
-
-## What is **base** keyword?<a id=base-keyword></a>
+## What is the **base** keyword?
 The **base** keyword in C# is used to access members of the **base class** from within a **derived class**.
 
 ### Key Points:
@@ -349,7 +349,7 @@ The **base** keyword in C# is used to access members of the **base class** from 
 2. **Constructor Chaining**: It is commonly used to call a constructor of the base class when creating an instance of a derived class.
 3. **Method Overriding**: It can be used within an overridden method to call the base class implementation of that method.
 
-## What is the **static** modifier?<a id="StaticModifier"></a>
+## What is the **static** modifier?
 The `static` modifier in C# is used to declare members that belong to the type itself rather than to any specific instance of the type. 
 
  Static members are shared across all instances of a class, meaning there's only one copy in memory. This is useful for resources or operations that need to be common for all instances, such as configuration settings or utility functions.
@@ -359,7 +359,7 @@ The `static` modifier in C# is used to declare members that belong to the type i
    Console.WriteLine(); //(WriteLine) is static member
  ```
 
-## What is **virtual** modifier? <a id=virtual-modifier></a>
+## What is the **virtual** modifier?
 The virtual keyword is used to declare a method, property, indexer, or event in a base class that can be overridden in derived classes.
 
 This enables **polymorphism**, allowing a derived class to provide a different implementation of the method or member.
@@ -369,11 +369,12 @@ This enables **polymorphism**, allowing a derived class to provide a different i
 - The `virtual` member must have a definition in the base class.
 - Derived classes do not have to override a `virtual` member; they can use the base class implementation.
 
-## What is **abstract** modifier?<a id=abstract-modifier></a>
+## What is the **abstract** modifier?
 The **abstract** modifier is used to define incomplete classes and methods that serve as a blueprint for other classes.   
 An abstract class cannot be instantiated on its own, and any method marked as abstract must be implemented by derived (subclassed) classes.
 
-## What is the difference between **virtual** and **abstract**?<a id=virtual-VS-abstract></a>
+
+## What is the difference between **virtual** and **abstract**?
 | Aspect | `virtual` | `abstract` |
 |---------|-----------|------------|
 | Implementation | Must have a default implementation | Cannot have an implementation |
@@ -385,10 +386,10 @@ An abstract class cannot be instantiated on its own, and any method marked as ab
 | Can be sealed | Yes | No |
 | Method Example | `virtual void Start() { /* code */ }` | `abstract void Start();` |
 | Base Class Example | `class Animal { }` | `abstract class Animal { }` |
-## What is **sealed** modifier?<a id=sealed-modifier></a>
+## What is the **sealed** modifier?
 **sealed** is used to  prevents inheritance of a class or prevents further overriding of a method.
 
-## What are **is** and **as** keywords? <a id=is-as></a> 
+## What are the **is** and **as** keywords?
 The `is` and `as` keywords in C# are used for type checking and safe type casting.
 
 ### `is` Keyword:
@@ -422,7 +423,7 @@ The `is` and `as` keywords in C# are used for type checking and safe type castin
     }
     ```
 
-## What are **Downcasting** and **Upcasting**? <a id=Downcasting-Upcasting></a>
+## What are **Downcasting** and **Upcasting**?
 **Upcasting and downcasting** are concepts in object-oriented programming related to type conversion within an inheritance hierarchy. 
 
 ### Upcasting:
@@ -469,7 +470,7 @@ Some time we can get an `InvalidCastException` if the object is not of the corre
       myDog.Bark();
   }
   ```
-## What is **Method Signature**?  <a id="MethodSignature"></a>
+## What is the **Method Signature**?
 A **method signature** in C# refers to the unique identity of a method. It includes:
 
 1. **Method Name**: The name of the method.
@@ -479,11 +480,11 @@ A **method signature** in C# refers to the unique identity of a method. It inclu
 - **Return Type** is **not** part of the method signature.
 - **Modifiers** like `static`, `virtual`, or `override` are also **not** part of the method signature.
 
-## What is **Method Overloading**?<a id=Overloading></a>
+## What is the **Method Overloading**?
 
 Method overloading is a feature that allows a class to have multiple methods with the same name but different parameter lists (i.e., different type, number, or order of parameters). This allows methods to perform similar functions but with different types of input.
 
-## What is **Method Overriding**?<a id=Overriding></a>
+## What is the **Method Overriding**?
 
 **Method overriding** is a feature that allows a subclass to provide a specific implementation for a method that is already defined in its base (parent) class. The method in the derived class must have the same signature as the method in the base class. This enables runtime polymorphism, where the method that gets called is determined at runtime based on the actual type of the object.
 
@@ -494,7 +495,7 @@ Method overloading is a feature that allows a class to have multiple methods wit
   - The method in the derived class must be marked with the `override` keyword.
 - **Run-time Polymorphism**: Method overriding is an example of run-time (or dynamic) polymorphism.
 
-## What is the difference between **abstract class** and **interface**? <a id="AbstractClass-VS-Interface"></a>
+## What is the difference between **abstract class** and **interface**? 
 | Feature                     | **Abstract Class**                                     | **Interface**                                    |
 |-----------------------------|-------------------------------------------------------|--------------------------------------------------|
 | **Declaration**              | `abstract` keyword                                   | `interface` keyword                              |
@@ -505,13 +506,3 @@ Method overloading is a feature that allows a class to have multiple methods wit
 | **Access Modifiers**         | Members can have different types of access modifiers | All members are implicitly `public`               |
 | **When to Use**              | Use when classes share common method implementations | Use when only behavior (no implementation) needs to be defined |
 | **Example**                  | ```abstract class Animal { public abstract void Speak(); public void Eat() { } }``` | ```interface IAnimal { void Speak(); }``` |
-
-
-
-
-
-
-
-
-
-

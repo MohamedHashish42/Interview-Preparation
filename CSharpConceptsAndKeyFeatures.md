@@ -2,44 +2,44 @@
 # C# Concepts and Key Features
 
 
-- [What is **C#** and how does it differ from **.NET**?](#CSharp-VS-Net)
-- [What is difference between **value type** and **reference type**?](#ValueType-VS-RefType)
-- [What is **Boxing** and **Unboxing**?](#BoxingAndUnboxing)
-- [What is difference between **Passing By Value** and **Passing By Reference**?](#PassingType)
-- [What are **out**, **ref** and **in** keywords?](#OutRefIn)
-- [What is the difference between **struct** and **class**?](#struct-VS-class)
-- [What is difference between **constants** and **readonly** variables?](#Constants-VS-ReadOnly)
-- [What is difference between **Properties** and **Fields**?](#Properties-VS-Fields)
-- [What are **generics** and why are they useful?](#Generics)
-- [What is the difference between **string** and **StringBuilder** ?](#String-VS-Stringbuilder)
-- [What is **lambda expression**?](#LambdaExpression)
-- [What Is **delegate**?](#Delegate-In-CSharp)
-- [What Is **Action**, **Func**, and **Predicate**?](#Action-Func-Predicate)
-- [What are **extension methods**?](#ExtensionMethods)
-- [What the **IDisposable** interface and its purpose?](#IIDisposable-And-Purpose)
-- [What is the purpose of the **using** statement?](#Using-In-CSharp)
-- [What is the difference between  **++i** (pre-increment) **i++** (post-increment)?](#pre-post-increment)
-- [What is the difference between **dynamic** and **object**?](#Dynamic-Object)
-- [What is **Indexer**?](#Indexer)
-- [What **params** modifier?](#params)
-- [What is **tuple**?](#tuple)
-- [What is **var** keyword?](#var)
-- [What is **yield** keyword?](#yield)
-- [What Are **Foreground** and **Background** threads?](#Foreground-Background-Threads)
-- [What is the **ThreadPool**?](#ThreadPool)
-- [What are **async/await**?](#async-await-In-CSharp)
-- [What is a **Task**?](#Task)
-- [What is the difference between **Task.Run** and **Thread.Start**?](#Task-vs-Thread)
+
+- [What is **C#** and how does it differ from **.NET**?](#what-is-c-and-how-does-it-differ-from-net)
+- [What is the difference between **Value Type** and **Reference Type**?](#what-is-the-difference-between-value-type-and-reference-type)
+- [What is **Boxing** and **Unboxing**?](#what-is-boxing-and-unboxing)
+- [What is the difference between **Passing By Value** and **Passing By Reference**?](#what-is-the-difference-between-passing-by-value-and-passing-by-reference)
+- [What are the **out**, **ref**, and **in** keywords?](#what-are-the-out-ref-and-in-keywords)
+- [What is the difference between **Struct** and **Class**?](#what-is-the-difference-between-struct-and-class)
+- [What is the difference between **Constants** and **Readonly** variables?](#what-is-the-difference-between-constants-and-readonly-variables)
+- [What is the difference between **Properties** and **Fields**?](#what-is-the-difference-between-properties-and-fields)
+- [What are **Generics**, and why are they useful?](#what-are-generics-and-why-are-they-useful)
+- [What is the difference between **String** and **StringBuilder**?](#what-is-the-difference-between-string-and-stringbuilder)
+- [What is the **Lambda Expression**?](#what-is-the-lambda-expression)
+- [What is the **Delegate**?](#what-is-the-delegate)
+- [What are **Action**, **Func** and **Predicate**?](#what-are-action-func-and-predicate)
+- [What are **Extension Methods**?](#what-are-extension-methods)
+- [What is the **IDisposable** interface, and its purpose?](#what-is-the-idisposable-interface-and-its-purpose)
+- [What is the purpose of the **using** statement?](#what-is-the-purpose-of-the-using-statement)
+- [What is the difference between **++i** (Pre-Increment) and **i++** (Post-Increment)?](#what-is-the-difference-between-i-pre-increment-and-i-post-increment)
+- [What is the difference between **dynamic** and **object**?](#what-is-the-difference-between-dynamic-and-object)
+- [What is the **Indexer**?](#what-is-the-indexer)
+- [What is the **params** modifier?](#what-is-the-params-modifier)
+- [What is the **Tuple**?](#what-is-the-tuple)
+- [What is the **var** keyword?](#what-is-the-var-keyword)
+- [What is the **yield** keyword?](#what-is-the-yield-keyword)
+- [What are **Foreground** and **Background** Threads?](#what-are-foreground-and-background-threads)
+- [What is the **ThreadPool**?](#what-is-the-threadpool)
+- [What are **async/await**?](#what-are-asyncawait)
+- [What is the **Task**?](#what-is-the-task)
+- [What is the difference between **Task.Run** and **Thread.Start**?](#what-is-the-difference-between-taskrun-and-threadstart)
 
 
-
-## What is C# and how does it differ from .NET? <a id="CSharp-VS-Net"></a>
+## What is C# and how does it differ from .NET? 
 C# is a **language** used to write programs, while .NET is a **framework** that provides the environment and tools needed to run those programs. 
 
 .NET supports other languages such as VB.NET and F#. 
  
 
-## What is difference between **value type** and **reference type**?  <a id="ValueType-VS-RefType"></a>
+## What is the difference between **value type** and **reference type**? 
 | Feature                        | **Value Type**                                      | **Reference Type**                                 |
 |---------------------------------|----------------------------------------------------|----------------------------------------------------|
 | **Memory Location**             | Stored directly on the **stack**.                  | Stored on the **heap** with a reference (pointer) to the memory address on the stack. |
@@ -59,7 +59,7 @@ In summary:
 </h2>
 
 
-## What is **Boxing** and **Unboxing**? <a id="BoxingAndUnboxing"></a>
+## What is **Boxing** and **Unboxing**?
 ### **Boxing**:
 - **Boxing** is the process of converting a **value type** (e.g., `int`, `bool`) into a **reference type** (i.e., `object` or an interface).
 - Boxing occurs automatically (**implicit** cast).
@@ -75,7 +75,8 @@ object obj = num; // boxing
 int unboxedNum = (int)obj; // unboxing
 ```
 
-## What is difference between **Passing By Value** and **Passing By Reference**?  <a id="PassingType"></a>
+## What is the difference between **Passing By Value** and **Passing By Reference**? 
+
 | **Feature**               | **Passing by Value**                       | **Passing by Reference**                    |
 |---------------------------|--------------------------------------------|---------------------------------------------|
 | **Behavior**               | A copy of the value is passed to the method | A reference to the original value is passed |
@@ -83,7 +84,7 @@ int unboxedNum = (int)obj; // unboxing
 | **Usage**                  | Default for value types                    | Use `ref` or `out` to pass by reference     |
 | **Example**                | `ModifyValue(int x)`                       | `ModifyValue(ref int x)`   
 
-## What are **out**, **ref** and **in** keywords? <a id="OutRefIn"></a>
+## What are the **out**, **ref** and **in** keywords
 
 In C#, the **out**, **ref**, and **in** keywords are used to pass arguments by reference to methods, but they have distinct behaviors
 
@@ -95,7 +96,7 @@ In C#, the **out**, **ref**, and **in** keywords are used to pass arguments by r
 
 [Ref, Out and In Examples](./RelatedDocuments/CSharp/RefOutIn.md)
             
-## What is the difference between **struct** and **class**? <a id="struct-VS-class"></a>
+## What is the difference between **struct** and **class**? 
 | Feature               | **Class**                                               | **Struct**                                          |
 |-----------------------|---------------------------------------------------------|-----------------------------------------------------|
 | **Type**              | Reference type                                          | Value type                                          |
@@ -128,7 +129,7 @@ public struct Point
 
 
 
-## What is difference between **const** and **readonly** variables? <a id="Constants-VS-ReadOnly"></a>
+## What is the difference between **Constants** and **Readonly** variables?
 
 | Feature               | **`const`**               | **`readonly`**      |
 |-----------------------|--------------------------------------|------------------------------------------|
@@ -142,7 +143,7 @@ public struct Point
 | **Examples**          | `public const int Max = 100;`       | `public readonly int Max;`<br>`Max = value;` |
 
 
-## What is difference between **Properties** and **Fields**? <a id="Properties-VS-Fields"></a>
+## What is the difference between **Properties** and **Fields**?
 | Aspect | Properties | Fields |
 |--------|------------|--------|
 |Definition|Members that provide a flexible mechanism to read, write, or compute the value of a private field|Variables declared within a class to hold data|
@@ -153,14 +154,14 @@ public struct Point
 | Inheritance | Can be virtual and overridden | Cannot be overridden |
 | Interfaces | Can be declared in interfaces | Cannot be declared in interfaces |
 
-## What are generics and why are they useful? <a id="Generics"></a>
+## What are generics and why are they useful?
 - Generic means not specific to a particular data type.
 - Allows you to define classes, fields, methods, or interfaces **with type parameters** and this in turn improve code reusability.
 
 ### Example
 [Using Example](./RelatedDocuments/CSharp/Generic.md) 
 
-## What is the difference between **string** and **StringBuilder**? <a id="String-VS-Stringbuilder"></a>
+## What is the difference between **string** and **StringBuilder**? 
 
 | Feature                  | `string`                                   | `StringBuilder`                             |
 |--------------------------|--------------------------------------------|--------------------------------------------|
@@ -171,7 +172,7 @@ public struct Point
 | **Example of Concatenation** | `result += "Hello";` (creates new string each time) | `sb.Append("Hello");` (appends without creating new objects) |
 
 
-## What is **lambda expression**?<a id="LambdaExpression"></a>
+## What is the **lambda expression**?
 
 A **lambda expression** in C# is a concise way to define anonymous functions (functions without a name) that can contain **expressions or statements**. It’s often used with **LINQ** and **delegates**, making code simpler and more readable.
 
@@ -200,12 +201,12 @@ Func<int, int, int> multiplyOrAdd = (x, y) =>
 };
 ```
 
-##  What Is **delegate**?<a id="Delegate-In-CSharp"></a>
+##  What is the **delegate**?
 A delegate in C# **is a type that represents a reference to a method**.   
 It allows methods to be passed as parameters.   
 Delegates can point to methods with a **matching signature** and **return type**.
 
-## What Is **Action**, **Func**, and **Predicate**?<a id="Action-Func-Predicate"></a>
+## What are **Action**, **Func** and **Predicate**?
 In C#, `Action`, `Func`, and `Predicate` are delegate types provided by the language to encapsulate method references.
 
 ### **Action<T1, T2, ...>:**
@@ -244,7 +245,7 @@ isEven(2); //return true
 ```
 
 
-## What are **extension methods**?<a id="ExtensionMethods"></a>
+## What are **extension methods**?
 Extension methods in C# enable you to add methods to existing types without creating a new derived type or otherwise modifying the original type.
 
 It allows you to create a more fluent syntax for function composition. 
@@ -256,7 +257,7 @@ It allows you to create a more fluent syntax for function composition.
 Here’s an example of how you can achieve this:  
 [Extension Method Example](./RelatedDocuments/CSharp/ExtensionMethod.md)
 
-## What the **IDisposable** interface and its purpose? <a id="IIDisposable-And-Purpose"></a>
+## What is the **IDisposable** interface, and its purpose?
 ### Definition
  **`IDisposable`** is an interface used to **release unmanaged resources** in a **deterministic way**.  
 #### **Definition Breakdown**  
@@ -288,9 +289,7 @@ Here’s an example of how you can achieve this:
        // The Dispose method is called automatically here
    ```
 
-
-
-## What is the purpose of the **using** statement? <a id="Using-In-CSharp"></a>
+## What is the purpose of the **using** statement? 
 
 The **`using` statement** in C# is primarily used for managing **resource disposal**. It ensures that unmanaged resources, such as file handles, network connections, or database connections, are properly released when they are no longer needed.   
 The `using` statement provides a convenient way to work with objects that implement the **`IDisposable`** interface, automatically calling their `Dispose` method once the code block is exited, even if an exception occurs.
@@ -323,7 +322,7 @@ In this context, **`ResourceType`** must implement the **`IDisposable`** interfa
 The `using` statement in C# is used for **automatic resource management**, ensuring that objects implementing the `IDisposable` interface are properly disposed of, helping to manage memory effectively and prevent resource leaks.
 
 
-## What is the difference between  **++i** (pre-increment) **i++** (post-increment)? <a id="pre-post-increment"></a>
+## What is the difference between **++i** (Pre-Increment) and **i++** (Post-Increment)
 
 ### 1. **Post-increment (`i++`)**  
 The increment happens **after** the value is used in the expression.
@@ -343,7 +342,7 @@ int i = 5;
 int result = ++i;  //  result = 6, i becomes 6,
 ```
 
-## What is the difference between **dynamic**, and **object**?<a id="Dynamic-Object"></a>
+## What is the difference between **dynamic**, and **object**?
 
 In C#, both dynamic and object are used to represent types that can hold any data type, but they have key differences in behavior, usage, and purpose. Here’s a breakdown:
 
@@ -360,12 +359,12 @@ In C#, both dynamic and object are used to represent types that can hold any dat
 - **`object`** is the root type of all .NET types, often used in scenarios requiring general-purpose storage but less convenient due to casting requirements.
 
 
-## What is Indexer? <a id="Indexer"></a>
+## What is the Indexer? 
 An indexer in C# is a **special type of property that allows an object to be indexed**  
 in the same way as an array using square brackets [].  
 [Indexer Example](./RelatedDocuments/CSharp/Indexer.md) 
 
-## What **params** modifier?<a id="params"></a>
+## What is the **params** modifier?
 The `params` modifier in C# allows you to pass a **variable number of arguments** to a method. It lets you define a method parameter that can accept **zero or more arguments** of a specified type, packed into an array.  
 [Params Example](./RelatedDocuments/CSharp/Params.md) 
 
@@ -379,7 +378,7 @@ The `params` modifier in C# allows you to pass a **variable number of arguments*
 - Only one `params` parameter is allowed per method.
 
 
-## What is **tuple**?<a id="tuple"></a>
+## What is the **tuple**?
 
 
 A **tuple** is a convenient way to **group multiple values in a lightweight data structure without defining a new class**.  
@@ -402,7 +401,7 @@ Console.WriteLine(employee.Name);   // Output: Alice
 Console.WriteLine(employee.Age);    // Output: 25
 Console.WriteLine(employee.Position); // Output: Developer
 ```
-## What is **var** keyword? <a id="var"></a>
+## What is the **var** keyword? 
 In C#, **`var`** is a keyword used to declare **implicitly typed local variables**, where the compiler infers the type of the variable based on the value assigned to it.
 
 ### Key Features of `var`:
@@ -466,7 +465,7 @@ In C#, **`var`** is a keyword used to declare **implicitly typed local variables
 
 In summary, `var` simplifies code while retaining strong typing but should be used carefully to maintain readability and clarity.
 
-## What is **yield** keyword?<a id="yield"></a>
+## What is the **yield** keyword?
 The `yield` keyword in C# is used to create iterator methods, which return sequences of values one at a time. These methods return `IEnumerable` or `IEnumerable<T>`and allow for efficient on-demand iteration.
 
 
@@ -501,7 +500,7 @@ When you use `yield`, it pauses the execution of a method and remembers its stat
 2. State management within the iterator can be complex if the method has many variables.
 
 
-## What Are **Foreground** and **Background** Threads?<a id="Foreground-Background-Threads"></a>
+## What are **Foreground** and **Background** Threads?
 ### Foreground threads
 In C#, **foreground threads** are threads that run in the application and keep the application alive until they complete their execution. The application will not terminate until all foreground threads finish their work.
 
@@ -543,7 +542,7 @@ backgroundThread.Start();
 
 **Note**: In a background thread, if the main thread finishes execution, the background thread will be forcefully terminated.
 
-## What is the **ThreadPool**? <a id="ThreadPool"></a>
+## What is the **ThreadPool**?
 A **ThreadPool** in C# is a collection of worker threads that are managed and reused by the system for executing multiple tasks concurrently. Instead of creating a new thread every time a task is executed (which can be costly in terms of memory and performance), the **ThreadPool** reuses existing threads, making it more efficient.
 
 ### Key Points:
@@ -594,7 +593,7 @@ In the above example:
 - `ThreadPool.QueueUserWorkItem` places a task in the ThreadPool queue.
 - A worker thread from the pool picks up the task and executes it.
 
-## What are **async/await**?<a id="async-await-In-CSharp"></a>
+## What are **async/await**?
 `async` and `await` are keywords in C# used to write **asynchronous** code.
 They enable **non-blocking operations**, allowing the program to continue executing without waiting for a long-running task to complete.
 
@@ -605,7 +604,7 @@ They enable **non-blocking operations**, allowing the program to continue execut
 ### Example
 [async/await Example](./RelatedDocuments/CSharp/AsyncAwait/AsyncAwait.md) 
 
-## What is a **Task**?<a id="Task"></a>
+## What is the **Task**?
 In C#, a **Task** represents an asynchronous operation. It is used to run code in the background and allows for non-blocking execution. The Task class is part of the **System.Threading.Tasks** namespace and is commonly used with the async and await keywords to handle asynchronous methods. It can represent a computation that may or may not return a result and can be used to manage multiple operations running concurrently.
 
 ### Key Features of a Task:
@@ -652,7 +651,7 @@ class Program
 - **`Task.Delay`**: Creates a task that completes after a specified delay (useful for simulating timeouts or delays in asynchronous methods).
 
 
-## What is the difference between **Task.Run** and **Thread.Start**?<a id="Task-vs-Thread"></a>
+## What is the difference between **Task.Run** and **Thread.Start**?
 
 | **Aspect**            | **Task.Run**                                                                 | **Thread.Start**                                                   |
 |------------------------|------------------------------------------------------------------------------|----------------------------------------------------------------------|
@@ -669,20 +668,3 @@ class Program
 |--------------------------|--------------------------------------------------------------------------------------------------------------------------|
 | **Task.Run**            | `await Task.Run(() => { Console.WriteLine("Running with Task"); });`                                                      |
 | **Thread.Start**        | `var thread = new Thread(() => { Console.WriteLine("Running with Thread"); }); thread.Start();`                           |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

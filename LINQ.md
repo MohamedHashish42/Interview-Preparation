@@ -1,19 +1,17 @@
 
 # Language Integrated Query (LINQ)
 
-
-- [What Is **Linq**?](#What-Is-Linq)
-- [What is the difference between **IEnumerable** and **IQueryable**? ](#IEnumerable-VS-IQueryable)
-- [What is the difference between **Deferred** and **Immediate** execution? ](#Deferred-VS-Immediate)
-- [What are the two main syntax styles to write LINQ queries?](#LINQ-Syntax)
-- [What is the difference between **LINQ GroupBy** and **SQL GROUP BY**?](#LINQGroupBy-VS-SQLGROUPBY)
-- [What is the difference between **Any**,  **All** and **Contain**? ](#Any-VS-All-VS-Contain)
-- [What is the difference between **Select** and **SelectMany**?](#Select-VS-SelectMany)
-- [What is the difference between **First**, **FirstOrDefault**, **Single**, and **SingleOrDefault**?](#First-VS-Single)
-- [What is **ToLookup** in LINQ, and how is it different from **GroupBy**?](#ToLookup-VS-GroupBy)
-
-
-## What Is Linq?<a id="What-Is-Linq"></a>
+- [What Is **Linq**?](#what-is-linq)
+- [What is the difference between **IEnumerable** and **IQueryable**?](#what-is-the-difference-between-ienumerable-and-iqueryable)
+- [What is the difference between **Deferred** and **Immediate** execution?](#what-is-the-difference-between-deferred-and-immediate-execution)
+- [What are the two main syntax styles to write LINQ queries?](#what-are-the-two-main-syntax-styles-to-write-linq-queries)
+- [What is the difference between **LINQ GroupBy** and **SQL GROUP BY**?](#what-is-the-difference-between-linq-groupby-and-sql-group-by)
+- [What is the difference between **Any**, **All**, and **Contain**?](#what-is-the-difference-between-any-all-and-contain)
+- [What is the difference between **Select** and **SelectMany**?](#what-is-the-difference-between-select-and-selectmany)
+- [What is the difference between **First**, **FirstOrDefault**, **Single**, and **SingleOrDefault**?](#what-is-the-difference-between-first-firstordefault-single-and-singleordefault)
+- [What is **ToLookup** in LINQ, and how is it different from **GroupBy**?](#what-is-tolookup-in-linq-and-how-is-it-different-from-groupby)
+- [How do you perform multiple levels of sorting?](#how-do-you-perform-multiple-levels-of-sorting)
+## What Is Linq?
 **LINQ (Language Integrated Query)** a feature in .NET that allows querying data from various sources (e.g., collections, databases, XML) using a **uniform query syntax**.  
 
 It eliminates the mismatch between the programming language and database providers by using **a uniform query syntax**.
@@ -23,7 +21,7 @@ The Result of Linq Query can be:
 2. **IQueryable**
 
 
-## What is the difference between **IEnumerable** and **IQueryable**? <a id="IEnumerable-VS-IQueryable"></a>
+## What is the difference between **IEnumerable** and **IQueryable**?
 | **Feature**               | **IEnumerable**       | **IQueryable**                                      |
 |---------------------------|-----------------------|-----------------------------------------------------|
 | **Namespace**             | `System.Collections.Generic` | `System.Linq`                   |
@@ -56,7 +54,7 @@ The Result of Linq Query can be:
   .Where(c => c.Level == Level.Intermediate)
   ```
 
-## What is the difference between **Deferred** and **Immediate** execution? <a id="Deferred-VS-Immediate"></a>
+## What is the difference between **Deferred** and **Immediate** execution? 
 | **Aspect**               | **Deferred Execution**                                      | **Immediate Execution**                                    |
 |--------------------------|------------------------------------------------------------|----------------------------------------------------------|
 | **Definition**            | Query execution is delayed until the query results are accessed (e.g., via `foreach`, `ToList()` or other enumerations).   | Query execution happens immediately upon invocation  (e.g., via `ToList`, `Count`, `First`, `Sum`)|            |
@@ -82,7 +80,7 @@ As you see in previous comparison we can use methods like  `ToList()` in both **
 ### In Summary
 `ToList()` is the method that transitions from deferred to actual execution, but the difference lies in when it is called in the flow of the code.
 
-## What are the two main syntax styles to write LINQ queries? <a id="LINQ-Syntax"></a>
+## What are the two main syntax styles to write LINQ queries? 
 In LINQ, there are **two main syntaxes** for writing queries:
 
 ### 1. **Query Syntax (Query Operators)**  
@@ -104,7 +102,7 @@ In LINQ, there are **two main syntaxes** for writing queries:
   var result = users.Where(user => user.Age > 18).Select(user => user);
   ```
 
-## What is the difference between **LINQ GroupBy** and **SQL GROUP BY**?<a id="LINQGroupBy-VS-SQLGROUPBY"></a>
+## What is the difference between **LINQ GroupBy** and **SQL GROUP BY**?
 | **Aspect**              | **LINQ `GroupBy`**                                                                                   | **SQL `GROUP BY`**                                                         |
 |-------------------------|-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | **Purpose**             | Groups data into collections of keys and values (key-value pairs).                                   | Groups data for aggregation (e.g., `SUM`, `COUNT`, etc.).                  |
@@ -186,7 +184,7 @@ In LINQ, there are **two main syntaxes** for writing queries:
    B    |   2
   ```
 
-## What is the difference between **Any**,  **All** and **Contain**? <a id="Any-VS-All-VS-Contain"></a>
+## What is the difference between **Any**,  **All** and **Contain**? 
 
 | Feature                | `Any`                                    | `All`                                  | `Contains`                              |
 |------------------------|-------------------------------------------|-----------------------------------------|-------------------------------------------|
@@ -196,7 +194,7 @@ In LINQ, there are **two main syntaxes** for writing queries:
 | **Example**            | `numbers.Any(n => n > 10)`                | `numbers.All(n => n > 10)`               | `numbers.Contains(5)`                     |
 
 
-## What is the difference between  **Select** and **SelectMany**? <a id="Select-VS-SelectMany"></a>
+## What is the difference between  **Select** and **SelectMany**? 
 | Feature            | `Select`                               | `SelectMany`                             |
 |--------------------|------------------------------------------|--------------------------------------------|
 | **Purpose**        | Projects each element into a new form, **keeping nested collections as separate**. | Projects each element into a new form and **flattens nested collections** into a single collection. |
@@ -205,7 +203,7 @@ In LINQ, there are **two main syntaxes** for writing queries:
 | **Example**        | `var nested = libraries.Select(l => l.Books); // Returns IEnumerable<IEnumerable<Book>> ` | `var flat = people.SelectMany(p => p.Books); // Returns IEnumerable<Book>` |
 
 
-## What is the difference between **First**, **FirstOrDefault**, **Single**, and **SingleOrDefault**?<a id="First-VS-Single"></a>
+## What is the difference between **First**, **FirstOrDefault**, **Single**, and **SingleOrDefault**?
 Sure! Here is the transposed version of the table:
 
 | Feature                 | **`First`**                                      | **`FirstOrDefault`**                                   | **`Single`**                                      | **`SingleOrDefault`**                             |
@@ -214,7 +212,7 @@ Sure! Here is the transposed version of the table:
 | **Behavior on No Match** | Throws an **exception**.                          | Returns **default value**.                                | Throws an **exception**.                            | Returns **default value**.                           |
 | **Behavior on Multiple Matches** | Returns **first** matching element.            | Returns **first** matching element.                      | Throws an **exception** if more than one element matches. | Throws an **exception** if more than one element matches. |
 
-## What is `ToLookup` in LINQ, and how is it different from `GroupBy`?<a id="ToLookup-VS-GroupBy"></a>
+## What is `ToLookup` in LINQ, and how is it different from `GroupBy`?
 ToLookup and GroupBy in LINQ both group elements based on a key, but they differ in key ways:
 
 | Feature              | **`ToLookup`**                                    | **`GroupBy`**                                      |
@@ -229,13 +227,6 @@ ToLookup and GroupBy in LINQ both group elements based on a key, but they differ
 [ToLookupAndGroupBy](./RelatedDocuments/LINQ/ToLookupAndGroupBy.md)
 
 
-
-
-
-
-
-
-
 ## How do you perform multiple levels of sorting?
 To perform multiple levels of sorting, you can chain `ThenBy` or `ThenByDescending` methods after OrderBy or OrderByDescending
 ```csharp
@@ -243,5 +234,3 @@ var sortedPeople = people.OrderBy(p => p.LastName)
                          .ThenBy(p => p.FirstName)
                          .ToList();
 ```
-
-
