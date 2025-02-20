@@ -8,6 +8,7 @@
 Welcome to the **Interview Questions Repository**! This repository is designed to help developers prepare for interviews by covering essential topics in .NET development, including C#, OOP, and General .NET concepts.
 
 ## 📂 Categories
+- [.Net (General)](./DotNet(General).md)
 - [C# Concepts and Key Features](./CSharpConceptsAndKeyFeatures.md)
 - [Object-Oriented Programming (OOP)](./OOP.md)
 - [Language Integrated Query (LINQ)](./LINQ.md)
