@@ -75,11 +75,9 @@ GC.WaitForPendingFinalizers();
 
 | **Aspect**              | **Managed Resources**                            | **Unmanaged Resources**                          |
 |-------------------------|--------------------------------------------------|--------------------------------------------------|
-| **Definition**          | Resources managed by the .NET runtime (CLR).    | Resources not managed by the CLR, such as file handles, database connections, and memory allocated through native code. |
-| **Garbage Collection**  | Automatically cleaned up by the Garbage Collector (GC). | Must be explicitly released by the developer to avoid memory leaks. |
-| **Memory Management**   | CLR handles memory allocation and deallocation. | Requires manual implementation of cleanup, usually via `Dispose()` or finalizers. |
-| **Common Usage**        | Most typical C# objects, such as strings, lists, etc. | Resources like file I/O, network sockets, and COM objects. |
-| **Examples**            | Memory allocated for objects, managed arrays.   | File streams, database connections, handles to unmanaged memory, GDI objects. |
+| **Definition**          | Resources managed by the .NET runtime (CLR).    | Resources not managed by the CLR, such as File streams, database connections and network sockets. |
+| **Memory Management**   |CLR handles allocation and deallocation via Garbage Collector (GC). | Must be explicitly released by the developer using `Dispose()`or finalizers to avoid memory leaks. |
+| **Usage & Examples**            |Most C# objects (strings, lists, arrays).   | File streams, database connections, network sockets and COM objects. |
 
 
 ## How to debug .net code? 
