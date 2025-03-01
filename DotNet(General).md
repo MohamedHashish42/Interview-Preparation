@@ -6,7 +6,7 @@
 - [What is **Intermediate Language (IL)**](#what-is-intermediate-language-il)
 - [What is **CLR (Common Language Runtime)**](#what-is-clr-common-language-runtime)
 - [What is **Just-In-Time (JIT) Compilation**](#what-is-just-in-time-jit-compilation)
-- [What is **namespace**](#what-is-namespace)
+- [What is **Namespace**](#what-is-Namespace)
 - [What is **garbage collection**, and how does it work? Provide a code example of how you can enforce garbage collection.](#what-is-garbage-collection-and-how-does-it-work-provide-a-code-example-of-how-you-can-enforce-garbage-collection)
 - [What are the differences between **Managed Resources** and **Unmanaged Resources**?](#what-are-the-differences-between-managed-resources-and-unmanaged-resources)
 - [How to debug .NET Code?](#how-to-debug-net-code)
@@ -28,7 +28,7 @@ IL is part of the Common Language Infrastructure (CLI), which allows .NET progra
 The CLR (Common Language Runtime) in .NET is the virtual machine component that manages the execution of .NET programs.
 
 ## What is Just-In-Time (JIT) Compilation? 
-Just-In-Time (JIT) is the process where the Common Language Runtime (CLR) converts Intermediate Language (IL) code (contained in the assembly) into machine code at runtime, just before execution
+**JIT** is the process where the **CLR** converts Intermediate Language **IL** code (contained in the assembly) into machine code at runtime, just before execution.
 
 The compilation happens at runtime, just before the method or code is executed, hence the name "just-in-time."
 
@@ -38,8 +38,8 @@ The compilation happens at runtime, just before the method or code is executed, 
 </p>
 
 
-## What is namespace?
-is a way to organize and group related types (e.g., classes, interfaces, enums). It helps prevent 
+## What is Namespace?
+A Namespace is a way to organize and group related types (e.g., classes, interfaces, enums). It helps prevent 
 naming conflicts by allowing the same class names to exist in different namespaces.
 
 ### Declaration of a Namespace:
@@ -73,60 +73,67 @@ GC.WaitForPendingFinalizers();
 
 ## What are the differences between **Managed Resources** and **Unmanaged Resources**?
 
+
 | **Aspect**              | **Managed Resources**                            | **Unmanaged Resources**                          |
 |-------------------------|--------------------------------------------------|--------------------------------------------------|
-| **Definition**          | Resources managed by the .NET runtime (CLR).    | Resources not managed by the CLR, such as File streams, database connections and network sockets. |
-| **Memory Management**   |CLR handles allocation and deallocation via Garbage Collector (GC). | Must be explicitly released by the developer using `Dispose()`or finalizers to avoid memory leaks. |
-| **Usage & Examples**            |Most C# objects (strings, lists, arrays).   | File streams, database connections, network sockets and COM objects. |
+| **Definition**          | Resources managed by the .NET runtime (CLR).    | Resources not managed by the CLR. |
+| **Memory Management**   | The CLR handles allocation and deallocation via the Garbage Collector (GC). | Must be explicitly released by the developer using `Dispose()` (if the resource implements `IDisposable`) or finalizers (`~Destructor()`). Relying solely on finalizers can lead to delayed cleanup and performance issues. |
+| **Usage & Examples**    | Most C# objects, such as strings, lists, and arrays. | File streams, database connections, network sockets, and COM objects. |
+
 
 
 ## How to debug .net code? 
 
 ### 1. Setting Breakpoints
-A breakpoint is a marker you set on a line of code to pause execution when the program reaches that line
+A breakpoint is a marker you set on a line of code to pause execution when the program reaches that line.
 
-To set a breakpoint Click in the left margin of the code editor beside the line you want to break at, or press **F9**.
+#### How to Set a Breakpoint:
+- Click in the left margin of the code editor beside the line you want to break at, or press F9.
 
-When the program hits a breakpoint, you can inspect the variables, navigate through code, and see the current state.
+- When the program hits a breakpoint, you can inspect variables, navigate through code, and see the current state.
 
-### 2. Step Over, Step Into, Step Out
+### 2. Stepping
+- **Step Over (F10):** Executes the current line without stepping into method calls.
 
-**Step Over (F10):** Executes the current line of code. If the line contains a method call, it runs that method without step into it, moving to the next line 
+- **Step Into (F11):** Steps into method calls to debug inside them.
 
-**Step Into (F11):** Moves into the method call on the current line, allowing you to debug the code inside that method.
+- **Step Out (Shift + F11):**  Executes the remaining code of the current method and pauses at the caller line.
 
-**Step Out (Shift + F11):** Executes the rest of the current function and returns to the caller, pausing at the  line that called the method.
 
-### 3. Hover Tooltips
-When you hover over a variable during debugging, a tooltip shows the current value of that variable, helping to quickly inspect values without opening other windows
+### 3. **Skipping Lines of Code**  
+During debugging, you can **skip lines of code** to test scenarios or bypass problematic code:  
+- **Drag the Execution Pointer**:  
+  - While paused at a breakpoint, click and drag the yellow arrow (execution pointer) in the margin to a different line.  
+  - This skips execution of the lines between the original and new positions.  
+  - ⚠️ **Caution**: Skipping lines may cause unintended behavior if dependencies (e.g., variable initializations) are skipped.  
 
 
 ### 4. Inspecting Variables
 - **Locals Window:** Displays all local variables and their values in the current scope.
 - **Watch Window:** Add specific variables or expressions to the Watch Window to monitor their values as you step through the code.
+- **Hover Tooltips:** Hover over a variable to quickly inspect values without opening other windows.
+- **Quick Watch (Shift + F9):** Temporarily inspect a variable or expression without adding it to the Watch Window.
 
-
-### 5. Quick Watch (Shift + F9)
-- **Quick Watch (Shift + F9)** : Quick Watch is a feature in Visual Studio that allows you to quickly inspect the value of selected variable or expression during debugging without adding it permanently to the Watch Window.
-
-### 6. Call Stack
-The Call Stack window shows the series of method calls that led to the current point of execution. This is useful for understanding how your program reached a specific method.
+### 5. Call Stack
+The Call Stack window shows the series of method calls that led to the current point of execution.   
+This is useful for understanding how your program reached a specific method.
 Open it via Debug > Windows > Call Stack.
 
-### 7. Immediate Window
-The Immediate Window allows you to execute commands, check the values of variables, or even change variable values while the code is in break mode.
-Open it via Debug > Windows > Immediate or by pressing Ctrl + Alt + I.
+### 6. Immediate Window
+Execute commands, check variable values, or modify variable values while paused.  
+Open via: Debug > Windows > Immediate or press Ctrl + Alt + I.
 
-### 8. Edit and Continue
-The Edit and Continue feature allows you to modify code during debugging without stopping your session.
-Make changes to your code while paused at a breakpoint, and continue running to see how the changes affect execution.
+### 7. Edit and Continue
+Modify code during debugging without stopping the session. 
+Make changes while paused at a breakpoint and continue running.
 
-### 9. Exception Handling and Debugging
+### 8. Exception Handling and Debugging
 Use try-catch blocks to handle exceptions and add breakpoints within catch blocks to inspect exceptions.
 
-### 10. Debugging Multiple Threads
-If you’re working with multithreaded code, you can use the Threads Window (Debug > Windows > Threads) to view and control the threads running in your application.
-You can also freeze or thaw individual threads to help isolate concurrency issues.
+### 9. Debugging Multiple Threads
+Use the **Threads Window** (Debug > Windows > Threads) to view and control running threads.
+
+
 
 
 
