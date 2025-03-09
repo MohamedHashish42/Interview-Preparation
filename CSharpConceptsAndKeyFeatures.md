@@ -5,6 +5,7 @@
 
 - [What is **C#** and how does it differ from **.NET**?](#what-is-c-and-how-does-it-differ-from-net)
 - [What is the difference between **Value Type** and **Reference Type**?](#what-is-the-difference-between-value-type-and-reference-type)
+- [Why does **string** in C# behave like a value type despite being a reference type?](#why-does-string-in-c-behave-like-a-value-type-despite-being-a-reference-type)
 - [What is **Boxing** and **Unboxing**?](#what-is-boxing-and-unboxing)
 - [What is the difference between **Passing By Value** and **Passing By Reference**?](#what-is-the-difference-between-passing-by-value-and-passing-by-reference)
 - [What are the **out**, **ref**, and **in** keywords?](#what-are-the-out-ref-and-in-keywords)
@@ -39,25 +40,62 @@ C# is a **language** used to write programs, while .NET is a **framework** that 
 .NET supports other languages such as VB.NET and F#. 
  
 
-## What is the difference between **value type** and **reference type**? 
-| Feature                        | **Value Type**                                      | **Reference Type**                                 |
-|---------------------------------|----------------------------------------------------|----------------------------------------------------|
-| **Memory Location**             | Stored directly on the **stack**.                  | Stored on the **heap** with a reference (pointer) to the memory address on the stack. |
-| **Copying Behavior**            | When assigned to another variable, a **copy of the value is made (two independent copies)**. | When assigned to another variable, a **copy of the reference (not the actual object) is made**, meaning both variables point to the same object. |
-| **Nullability**                 | Cannot be `null` unless explicitly made nullable (e.g., `int?`). | Can be `null`, meaning it may not point to any object. |
-| **Default Initialization**      | Default values are assigned (`0`, `false`, etc.).  | Default value is `null` (not pointing to any object). |
-| **Examples**                    | Primitive types like `int`, `float`, `bool`, `struct`, `enum`. | Objects like `class`, `string`, `array`, `interface`, `delegate`. |
+## What is the difference between **value type** and **reference type**?  
 
-In summary:
-- **Value types** store data directly and create independent copies when assigned.
-- **Reference types** store references to objects in memory, so assigning one variable to another shares the same object.
+| **Feature**                     | **Value Type**                                                                                     | **Reference Type**                                                                                                    |
+|----------------------------------|----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| **Memory Location**              | Typically stored on the **stack**. However, if a value type is a field inside a class, it is stored on the **heap** as part of the class instance. | The **object** itself is stored on the **heap**, while the **reference** (pointer to the object) is stored on the **stack** (for local variables) or on the **heap** (for fields inside objects). |
+| **Copying Behavior**             | When assigned to another variable, a **copy of the value** is made, resulting in two independent copies. | When assigned to another variable, a **copy of the reference (pointer)** is made, meaning both variables point to the same object. |
+| **Nullability**                  | Cannot be `null` unless explicitly made nullable (e.g., `int?`).                                    | Can be `null`, meaning it may not point to any object.                                                                  |
+| **Default Initialization**       | Default values are assigned (e.g., `0`, `false`).                                                  | Default value is `null`, indicating it does not point to any object.                                                   |
+| **Examples**                     | `int`, `float`, `bool`, `struct`, `enum`.                                                          | `class`, `string`, `array`, `interface`, `delegate`.                                                                  |
+
+### Example
+```csharp
+class MemoryDemo
+{
+    // Value type field (Stored on the heap as part of the class)
+    public int valueField; 
+
+    // Reference type field (Stored on the heap)
+    public string text; 
+
+    // Reference type field pointing to another object (Stored on the heap)
+    public Engine engine; 
+
+    public void ShowMemoryLocations()
+    {
+        // Local value type (Stored on the stack)
+        int localValue = 100; 
+
+        // Local reference type (Reference is on the stack, object is on the heap)
+        Person person = new Person { Name = "Mohamed" }; 
+    }
+}
+
+```
+### In summary:
+- **Value types** are typically stored on the stack and hold data directly and create independent copies when assigned.  
+- **Reference types** are stored on the **heap**, while the **reference** (pointer to the object) is stored on the **stack** (for local variables) or on the **heap** (for fields inside objects), assigning one variable to another shares the same object.
   
-<h2 dir="rtl" align="center">
 
-   ![ValueTypeVSRefType](./RelatedDocuments/CSharp/Figures/ValueTypeVSRefType.PNG)
+<p align="center">
+    <img src="./RelatedDocuments/CSharp/Figures/ValueTypeVSRefType.PNG" alt="JIT">
+</p>
 
-</h2>
 
+
+## Why does **string** in C# behave like a value type despite being a reference type?
+In C#, `string` is a **reference type**, but it behaves like a **value type** because it is **immutable**. This means any modification to a `string` creates a new instance rather than modifying the original one. This behavior makes it seem like a value type since operations on `string` do not affect the original instance.
+
+### Example:
+```csharp
+string s1 = "Hello";
+string s2 = s1;
+s1 = "World";
+
+Console.WriteLine(s2); // Output: Hello
+```
 
 ## What is **Boxing** and **Unboxing**?
 ### **Boxing**:
