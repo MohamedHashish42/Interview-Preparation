@@ -54,7 +54,7 @@ C# is a **language** used to write programs, while .NET is a **framework** that 
 ```csharp
 class MemoryDemo
 {
-    // Value type field (Stored on the heap as part of the class)
+    // Value type field (Stored on the heap as part of the class instance)
     public int valueField; 
 
     // Reference type field (Stored on the heap)
@@ -115,12 +115,56 @@ int unboxedNum = (int)obj; // unboxing
 
 ## What is the difference between **Passing By Value** and **Passing By Reference**? 
 
-| **Feature**               | **Passing by Value**                       | **Passing by Reference**                    |
-|---------------------------|--------------------------------------------|---------------------------------------------|
-| **Behavior**               | A copy of the value is passed to the method | A reference to the original value is passed |
-| **Effect on Original Data**| Changes inside the method do not affect the original variable | Changes inside the method affect the original variable |
-| **Usage**                  | Default for value types                    | Use `ref` or `out` to pass by reference     |
-| **Example**                | `ModifyValue(int x)`                       | `ModifyValue(ref int x)`   
+
+| **Feature**                 | **Pass by Value**                                                           | **Pass by Reference**                                         |
+| --------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| **Behavior**                | A **copy** of the variable is passed                                        | A **reference** to the original variable is passed            |
+| **Effect on Original Data** | Changes inside the method **do not affect** the original variable           | Changes inside the method **do affect** the original variable |
+| **Usage**                   | Default for **value types** and **reference types** (but note nuance below) | Use `ref`, `out`, or `in` modifiers                           |
+| **Example**                 | `void ModifyValue(int x)`                                                   | `void ModifyValue(ref int x)`                                 |
+
+### 🔍 Clarification:
+
+* In C#, **all arguments are passed by value by default**, whether they are **value types** (like `int`, `struct`) or **reference types** (like `class`).
+* For **reference types**, the **reference itself** is passed **by value**, meaning the method receives a copy of the reference. So, changes to the object **are reflected outside**, but **reassigning** the reference inside the method does **not** affect the original.   
+  ```csharp
+  class Person
+  {
+      public string Name { get; set; }
+  }
+
+  class Program
+  {
+      static void ModifyPerson(Person p)
+      {   
+          /*
+           This line modifies the state (Name property) of the object that 'p' points to.
+           Since 'p' is a reference to the same object that 'person' (in Main) refers to,
+           the change will be visible outside this method.           
+          */          
+          p.Name = "Alice";
+
+          /*
+            This line creates a new Person object in the heap with Name = "Bob".
+            Then it changes the local reference variable 'p' to point to this new object.
+            However, this reassignment affects only the local copy of the reference (p),
+            not the original 'person' variable in Main. So the caller still points to the 
+            original object.
+          */         
+          p = new Person { Name = "Bob" };
+      }
+
+      static void Main()
+      {
+          Person person = new Person { Name = "John" };
+
+          ModifyPerson(person);
+
+          Console.WriteLine(person.Name); // Output: Alice
+      }
+  }
+  ``` 
+
 
 ## What are the **out**, **ref** and **in** keywords
 
@@ -138,7 +182,6 @@ In C#, the **out**, **ref**, and **in** keywords are used to pass arguments by r
 | Feature               | **Class**                                               | **Struct**                                          |
 |-----------------------|---------------------------------------------------------|-----------------------------------------------------|
 | **Type**              | Reference type                                          | Value type                                          |
-| **Memory Allocation** | Allocated on the heap                                   | Allocated on the stack                              |
 | **Inheritance**       | Supports inheritance                                    | Does not support inheritance                        |
 | **Default Constructor** | Can have a custom parameterless constructor (if explicitly defined)| Cannot define custom parameterless constructors (compiler provides one that initializes all fields) |
 | **Use Cases**         | Ideal for complex data and objects with many fields     | Best for small, lightweight data structures that don't require inheritance |
@@ -171,24 +214,21 @@ public struct Point
 
 | Feature               | **`const`**               | **`readonly`**      |
 |-----------------------|--------------------------------------|------------------------------------------|
-| **Declaration**       | `const` keyword                     | `readonly` keyword                      |
-| **Initialization**    | Must be initialized at declaration  | Can be initialized at declaration or in the constructor |
-| **Modifiable**        | Not modifiable after declaration    | Not modifiable after initialization     |
+| **Initialization**    | 	At declaration only | At declaration or in constructor |
+| **Modifiable**        | Not modifiable after initialization    | Not modifiable after initialization         |
 | **Value Set Time**    | Compile-time                        | Compile-time or Runtime (usually in the constructor)    |
-| **can be declared inside the method**      | yes         | No     |
-|**Can be used with static modifiers**|No (because const is implicit Static)|Yes|
+| **Declaration Inside Method**      | yes         | No     |
+|**Using with static modifier**|No (because const is implicit Static)|Yes|
 | **Usage**             | Fixed values like `PI`, `MaxValue`  | Values set once, such as configuration data |
 | **Examples**          | `public const int Max = 100;`       | `public readonly int Max;`<br>`Max = value;` |
-
 
 ## What is the difference between **Properties** and **Fields**?
 | Aspect | Properties | Fields |
 |--------|------------|--------|
-|Definition|Members that provide a flexible mechanism to read, write, or compute the value of a private field|Variables declared within a class to hold data|
-| Syntax | Use get and set accessors | Declared as variables within a class |
-| Encapsulation | Provide abstraction, hiding implementation details | If public, expose internal structure |
-| Access Control | Can have different access levels for **get** and **set** | Single access modifier for the whole field |
-| Validation | Can include logic to validate data | Only store data|
+| Definition | A member that provides a mechanism to read, write, <br> or compute the value of a private Variables | A variable that holds data directly |
+| Encapsulation | High – can include access rules, validation, and logic | Low – typically private and only stores data |
+| Syntax | Use `get` and `set` accessors | Declared as variables within a class |
+| Access Control | Can have different access levels for `get` and `set`<br>`public int Age { get; private set; }` | Single access modifier for the whole field<br>`private int age;` |
 | Inheritance | Can be virtual and overridden | Cannot be overridden |
 | Interfaces | Can be declared in interfaces | Cannot be declared in interfaces |
 
@@ -215,9 +255,13 @@ public struct Point
 A **lambda expression** in C# is a concise way to define anonymous functions (functions without a name) that can contain **expressions or statements**. It’s often used with **LINQ** and **delegates**, making code simpler and more readable.
 
 **Key Points:**  
-1. **Syntax**: The syntax of a lambda expression is `(input parameters) => expression or statements`.
+1. **Syntax**: The syntax of a lambda expression is   
+    ```csharp
+      (input parameters) => expression
+      (input parameters) => { statements }
+    ```
 2. **Usage**: Commonly used for short, inline functions with LINQ, and delegates.
-3. **Readability**: Provides a clear, shorthand way to define functions, especially within collections or filtering.methods.
+3. **Readability**: Provides a clear, shorthand way to define behavior, especially in collection processing like `.Where()`, `.Select()`, `.OrderBy()`, etc..
 
 ### Expression Lambda
 Expression lambda contains a single expression after the `=>` symbol. It’s ideal for simple operations and directly returns the result of the expression.
@@ -249,8 +293,8 @@ In C#, `Action`, `Func`, and `Predicate` are delegate types provided by the lang
 
 ### **Action<T1, T2, ...>:**
 
-- `Action` is a **generic delegate type**, but it represents a method that takes parameters of types `T1, T2, ..., Tn` and does not **return a value (void)**.
-- It can represent a method with up to 16 input parameters.
+- `Action` is a **generic delegate type** that represents a method with up to **16 input parameters** of types `T1, T2, ..., Tn`   
+and **no return value (void)**.
 
 ```csharp
 // Represents an action that takes two integers and prints their sum
@@ -260,9 +304,8 @@ printSumAction(3, 5); // Prints 8
 
 ### **Func<T1, T2, ..., TResult>:**
 
-- `Func` is a **generic delegate type** that represents a method that takes parameters of types `T1, T2, ..., Tn` and **returns a result of type `TResult`**.
-- Like `Action`, it can represent a method with up to 16 input parameters
-- The last type parameter (`TResult`) represents the return type.
+- `Func` is a **generic delegate type** that represents a method with up to **16 input parameters** of types `T1, T2, ..., Tn`   
+and **returns a result of type `TResult`**.
 
 ```csharp
 // Represents a function that takes two integers and returns their sum
@@ -273,7 +316,7 @@ int result = addFunction(3, 5); // return 8
 ### **Predicate <T>**
 
 - `Predicate` is a **generic delegate type** that represents a method that takes **one input** parameter and **returns a Boolean value**.
-- It has a single method signature `bool Predicate<T>(T obj)`.
+
 - `Predicate<T>` is equivalent to `Func<T, bool>`.
 
 ```csharp
@@ -284,12 +327,12 @@ isEven(2); //return true
 
 
 ## What are **extension methods**?
-Extension methods in C# enable you to add methods to existing types without creating a new derived type or otherwise modifying the original type.
+Extension methods in C# enable you to add methods to existing types without modifying the original type or creating a derived type.   
 
-It allows you to create a more fluent syntax for function composition. 
+They enable a more fluent syntax for function composition.
 ### Syntax:
-- Extension methods are declared as static methods in a static class.
-- The first parameter in the method must include the this keyword followed by the type to be extended.
+- Extension methods are declared as **`static` methods** in a **`static` class**.
+- The first parameter in the method must include the **`this` keyword** followed by the **type to be extended**.
 
 
 Here’s an example of how you can achieve this:  
@@ -299,8 +342,9 @@ Here’s an example of how you can achieve this:
 ### Definition
  **`IDisposable`** is an interface used to **release unmanaged resources** in a **deterministic way**.  
 #### **Definition Breakdown**  
-**Unmanaged resources:** Resources not managed by the CLR, such as file handles, database connections, and memory allocated through native code.   
-**deterministic:** The **`Dispose`** method is called to explicitly clean up resources when an object is no longer needed
+**Unmanaged resources:** Resources not managed by the CLR, such as file handles, database connections, or memory allocated through native code.
+**deterministic:** The **`Dispose`** method is called  **explicitly** to release resources when an object is no longer needed.
+
 
 ### Syntax
 1. **Without Using**
@@ -329,13 +373,14 @@ Here’s an example of how you can achieve this:
 
 ## What is the purpose of the **using** statement? 
 
-The **`using` statement** in C# is primarily used for managing **resource disposal**. It ensures that unmanaged resources, such as file handles, network connections, or database connections, are properly released when they are no longer needed.   
+The **`using` statement** in C# is primarily used for managing **resource disposal**. It ensures that **unmanaged resources**, such as file handles, network connections, or database connections, are properly released when they are no longer needed.   
 The `using` statement provides a convenient way to work with objects that implement the **`IDisposable`** interface, automatically calling their `Dispose` method once the code block is exited, even if an exception occurs.
 
 ### **Purpose of `using` Statement**:
 - **Automatic Resource Management**: Ensures that resources are properly disposed of without requiring explicit code to do so.
 - **Simplifies Code**: Reduces boilerplate code for disposing of objects and handling exceptions.
 - **Prevents Memory Leaks**: Guarantees that unmanaged resources are cleaned up, reducing the risk of memory leaks.
+  
 
 ### **Syntax**:
 ```csharp
@@ -382,48 +427,61 @@ int result = ++i;  //  result = 6, i becomes 6,
 
 ## What is the difference between **dynamic**, and **object**?
 
-In C#, both dynamic and object are used to represent types that can hold any data type, but they have key differences in behavior, usage, and purpose. Here’s a breakdown:
+In C#, both `dynamic `and `object` are used to represent types that can hold any data type, but they have key differences in behavior, usage, and purpose. Here’s a breakdown:
 
-| Feature                | `dynamic`                 | `object`                         |
-|------------------------|---------------------------|----------------------------------|
-| **Definition**   | Runtime-bound type. The type is resolved at runtime. | Base type for all types in .NET,determined at compile time.|
-| **Casting to retrieve the original type when accessing it** |**Require explicit casting** |**Not required**|
-|**Compile-Time Checking**|**No** type checking|**Minimal** type checking (compiler only ensures it's a valid .NET type)|
-| **Use Case**           | When working with dynamic data where the type is unknown at compile time, such as data from COM objects, reflection, or dynamic languages. | When you need a generic holder for data of any type with compile-time safety and casting. |
-| **Example**            | `dynamic number = "1"; number = number + 1;` (works without explicit type conversion, but fails if the operation is invalid at runtime). | `object name = "Mohamed"; string strName = (string)name;` (explicit cast is needed to access string-specific operations). |
+
+
+| Feature          | `dynamic`          | `object`                |
+|------------------|--------------------|-------------------------|
+| **Definition**                            | A type resolved entirely at **runtime**.                                                                   | The **base type** for all types in .NET.                                     |
+| **Casting to retrieve the original type** | **Not required** — members and operations resolved at runtime.                                                 | **Required** — explicit cast needed to access type-specific members.                   |
+| **Compile-Time Checking**                 | **No** compile-time type checking — errors occur at runtime.                                                   | **Yes** — compile-time checking ensures type safety.                                   |
+| **Use Case**                              | When working with data whose type is unknown at compile time (e.g., COM, reflection, JSON, dynamic languages). | When storing any type in a general-purpose container with compile-time safety.         |
+| **Example**                               | `dynamic name = "Mohamed";`<br> `var Length = name.Length;`<br>(Compiles, but may fail at runtime.)                           | `object name = "Mohamed";`<br> `var Length = ((string)name).Length;`<br>(Requires explicit cast to access string props.) |
 
 ### Key Notes:
 - **`dynamic`** is flexible but risky, as runtime errors can occur if the operations are invalid for the resolved type.
-- **`object`** is the root type of all .NET types, often used in scenarios requiring general-purpose storage but less convenient due to casting requirements.
+- **`object`** is the base type of all .NET types, often used in scenarios requiring general-purpose storage but less convenient due to casting requirements.
 
 
 ## What is the Indexer? 
 An indexer in C# is a **special type of property that allows an object to be indexed**  
 in the same way as an array using square brackets [].  
+
+### Benefits of Using Indexers
+- **Simplifies Syntax:** Allows objects to be accessed using array-like syntax, making code cleaner and easier to read.
+- **Improves Encapsulation:** Enables controlled access to internal data without exposing underlying data structures.
+- **Supports Multiple Parameters:** Indexers can take multiple parameters, enabling multidimensional access patterns.
+
+  
+
 [Indexer Example](./RelatedDocuments/CSharp/Indexer.md) 
 
 ## What is the **params** modifier?
-The `params` modifier in C# allows you to pass a **variable number of arguments** to a method. It lets you define a method parameter that can accept **zero or more arguments** of a specified type, packed into an array.  
+The `params` modifier in C# allows a method to accept a **variable number of arguments** as a **single array parameter**.   
+It lets you pass **zero or more arguments** of a specified type without explicitly creating an array. 
+
+
 [Params Example](./RelatedDocuments/CSharp/Params.md) 
 
 
 ### Benefits:
-- You can call the method with **any number of arguments**, or even none.
-- The `params` modifier provides flexibility without requiring you to manually create an array each time.
+- You can call the method with **any number of arguments**, or even **none**.
+- Removes the need to manually create an array when calling the method.
 
-### Key Restrictions:
-- The `params` keyword **must be the last parameter** in the method signature.
-- Only one `params` parameter is allowed per method.
+### Restrictions:
+- The `params` parameter **must be the last parameter** in the method signature.
+- Only **one** `params` parameter is allowed per method.
 
 
 ## What is the **tuple**?
 
 
 A **tuple** is a convenient way to **group multiple values in a lightweight data structure without defining a new class**.  
-Tuples are useful for temporary data structures and methods that need to return multiple values.
+Tuples are useful for **temporary data structures** and **methods that need to return multiple values**.
 
 
-### Basic Tuple
+### Basic Tuple (Pre-C# 7.0)
 ```csharp
 // Creating a tuple with two elements
 var person = Tuple.Create("Mohamed", 30);
@@ -440,7 +498,7 @@ Console.WriteLine(employee.Age);    // Output: 25
 Console.WriteLine(employee.Position); // Output: Developer
 ```
 ## What is the **var** keyword? 
-In C#, **`var`** is a keyword used to declare **implicitly typed local variables**, where the compiler infers the type of the variable based on the value assigned to it.
+InC#, **`var`** is a keyword that lets you declare a **local variable without explicitly specifying its type**, the compiler infers the type from the assigned value.
 
 ### Key Features of `var`:
 1. **Type Inference**:  
@@ -540,12 +598,13 @@ When you use `yield`, it pauses the execution of a method and remembers its stat
 
 ## What are **Foreground** and **Background** Threads?
 ### Foreground threads
-In C#, **foreground threads** are threads that run in the application and keep the application alive until they complete their execution. The application will not terminate until all foreground threads finish their work.
+In C#, **foreground threads** keep the application running until they finish execution.  
+The application will not terminate as long as any foreground thread is still running.
 
 #### Key Points:
-1. **Thread Behavior**: Foreground threads are the primary threads of execution in an application. The application will remain alive as long as there are any foreground threads running.
-2. **Termination**: The program will not exit until all foreground threads have completed their execution.
-3. **Use Case**: Typically used for critical tasks that must complete before the application terminates (e.g., main computation, UI interactions).
+1. **Thread Behavior**: Foreground threads are essential to the application's lifecycle—they keep it alive.
+2. **Termination**: The application exits **only after all** foreground threads complete.
+3. **Use Case**: Used for critical tasks that must finish before the app exits (e.g., main logic, UI).
 
 #### Example:
 ```csharp
@@ -557,15 +616,18 @@ Thread foregroundThread = new Thread(() =>
 foregroundThread.IsBackground = false; // Default is foreground thread
 foregroundThread.Start();
 ```
-
-In the above example, if the foreground thread is running, the application will wait until it finishes its execution before it can exit.
+As long as this thread is running, the application will not exit.
 ### Background threads
-In C#, **background threads** are threads that run in the background of your application. These threads are typically used **for tasks that should not block the main execution** of the program, such as performing lengthy computations or I/O operations.
+
+**Background threads** do **not** prevent the application from terminating.  
+They are often used for tasks like I/O or background processing that aren’t essential to app shutdown.
+
 
 #### Key Points:
-1. **Thread Behavior**: Background threads run independently of the main thread (UI thread).
-2. **Termination**: When all foreground threads (e.g., the main thread) finish, the runtime will automatically terminate any background threads, even if they haven't completed their work.
-3. **Use Case**: Ideal for tasks that don’t need to keep the application running.
+
+1. **Thread Behavior**: Run in the background, don’t block app termination.
+2. **Termination**: Automatically stopped when all foreground threads finish.
+3. **Use Case**: Ideal for non-critical tasks that can be abandoned if the app exits.
 
 #### Example:
 ```csharp
@@ -577,32 +639,28 @@ Thread backgroundThread = new Thread(() =>
 backgroundThread.IsBackground = true; // Set the thread as background
 backgroundThread.Start();
 ```
-
-**Note**: In a background thread, if the main thread finishes execution, the background thread will be forcefully terminated.
-
+This thread will stop automatically when all foreground threads have finished.
 ## What is the **ThreadPool**?
-A **ThreadPool** in C# is a collection of worker threads that are managed and reused by the system for executing multiple tasks concurrently. Instead of creating a new thread every time a task is executed (which can be costly in terms of memory and performance), the **ThreadPool** reuses existing threads, making it more efficient.
+
+The **ThreadPool** in C# is a pool of **managed worker threads** provided by the runtime to execute tasks concurrently.  
+Instead of creating a new thread for each task, the ThreadPool **reuses existing threads**, improving performance and reducing resource overhead.
 
 ### Key Points:
-- **ThreadPool Threads**: Threads from the pool are typically background threads, meaning they don't prevent the application from exiting.
-- **Limitations**: The number of threads in the pool is limited (though it can be expanded by the system).
-- **Automatic Management**: The runtime manages thread lifecycle, including scaling up/down as needed.
+
+- **Thread Type**: ThreadPool threads are typically **background threads**, so they don’t block application termination.
+- **Limitations**: The pool has a **maximum number of threads**, which the runtime can adjust dynamically
+- **Automatic Management**: The .NET runtime manages the pool creating, reusing, and releasing threads based on demand.
 
 
 ### How it Works:
-1. **Task Queue**: When a task is submitted to the ThreadPool, it is placed in a queue. 
-2. **Worker Threads**: Worker threads are idle threads from the pool that pick up tasks from the queue and execute them.
-3. **Thread Reuse**: After completing a task, a thread returns to the pool and is available for other tasks, avoiding the overhead of creating new threads.
-4. **Thread Management**: The .NET runtime automatically manages the number of threads in the pool, dynamically adjusting based on workload and system resources.
 
-This efficient way of handling tasks in a multithreaded environment helps reduce resource consumption and improves application responsiveness.
-
-### Advantages:
-- **Performance**: Reduces the overhead of creating and destroying threads.
-- **Scalability**: Handles multiple tasks without the overhead of managing individual threads.
-- **Efficient Resource Usage**: Limits the number of threads based on the system’s available resources.
+1. **Task Queue**: Submitted tasks are queued.
+2. **Worker Threads**: Worker threads are Idle threads that pick up tasks from the queue and execute them.
+3. **Thread Reuse**: After a task completes, the thread returns to the pool for reuse.
+4. **Dynamic Scaling**: The runtime adjusts the pool size based on workload and system resources.
 
 
+✅ This efficient way of handling tasks in a multithreaded environment helps reduce resource consumption and improves application responsiveness.
 
 ### Example:
 ```csharp
@@ -632,24 +690,39 @@ In the above example:
 - A worker thread from the pool picks up the task and executes it.
 
 ## What are **async/await**?
-`async` and `await` are keywords in C# used to write **asynchronous** code.
+`async` and `await` are keywords in C# used to write **asynchronous** code.  
 They enable **non-blocking operations**, allowing the program to continue executing without waiting for a long-running task to complete.
 
 `async`: Marks a method as **asynchronous** and indicates that it can contain `await` expressions.
 
-`await`: Pauses the execution of the `async` method until the awaited task completes, **without blocking**.
+`await`: Pauses the execution of the `async` method until the awaited `Task` completes, ****without blocking the main thread**.*.
 
 ### Example
 [async/await Example](./RelatedDocuments/CSharp/AsyncAwait/AsyncAwait.md) 
 
 ## What is the **Task**?
-In C#, a **Task** represents an asynchronous operation. It is used to run code in the background and allows for non-blocking execution. The Task class is part of the **System.Threading.Tasks** namespace and is commonly used with the async and await keywords to handle asynchronous methods. It can represent a computation that may or may not return a result and can be used to manage multiple operations running concurrently.
+- In C#, a **Task** represents an **asynchronous** operation.   
+- It is used to run code in the background and allows for **non-blocking** execution. 
+- The `Task` class is part of the **System.Threading.Tasks** namespace and is commonly used with the `async` and `await` keywords to handle asynchronous methods. 
 
-### Key Features of a Task:
-- **Asynchronous Execution**: Allows for the execution of operations asynchronously, freeing up the main thread for other tasks.
-- **Task Status**: A `Task` has various states, such as `Running`, `Completed`, `Faulted`, or `Canceled`, which can be monitored.
-- **Return Values**: Tasks can return values via `Task<T>`, where `T` is the type of the result.
-- **Continuation**: Tasks can continue executing other tasks after completion using methods like `ContinueWith`.
+### Task Types:
+1. **`Task`**: Represents an operation with no return value (like void).
+2. **`Task<T>`**: Represents an operation that returns a result of type `T`.
+
+### Task Methods:
+- `Task.Run(task)`: Starts a new task on a thread pool thread to run code asynchronously in the background
+- `Task.WhenAny(tasks)`: Completes when **any** task completes.
+- `Task.WhenAll(tasks)`: Completes when **all** tasks complete.
+- `Task.Delay(time)`: Creates a task that completes after a delay — useful for simulating timeouts or pauses.
+
+### Task Status:
+- `Created`: The task has been initialized but not yet started.
+- `WaitingToRun`: The task is scheduled and waiting to be assigned to a thread.
+- `Running`: The task is currently executing.
+- `RanToCompletion`: The task has finished successfully.
+- `Faulted`: The task has thrown an exception and failed.
+- `Canceled`: The task was canceled before it completed.
+
 
 ### Example of Task:
 ```csharp
@@ -658,35 +731,34 @@ using System.Threading.Tasks;
 
 class Program
 {
-    static async Task Main(string[] args)
+    static async Task Main()
     {
-        // Example of creating and running a Task asynchronously
-        Task task = Task.Run(() => DoWork());
-        await task;  // Wait for the task to complete
+        // Task: No return value
+        Task task1 = Task.Run(() =>
+        {
+            Console.WriteLine("Task 1 running...");
+        });
 
-        Console.WriteLine("Task completed.");
-    }
+        // Task<T>: Returns a result
+        Task<int> task2 = Task.Run(() =>
+        {
+            Console.WriteLine("Task 2 running...");
+            return 42;
+        });
 
-    static void DoWork()
-    {
-        Console.WriteLine("Work is being done on a separate thread.");
+        // Delay
+        await Task.Delay(1000); // wait for 1 second
+
+        // WhenAny: Completes when the first task finishes
+        Task firstFinished = await Task.WhenAny(task1, task2);
+        Console.WriteLine("First task finished");
+
+        // WhenAll: Waits for all tasks to complete
+        await Task.WhenAll(task1, task2);
+        Console.WriteLine($"All tasks completed. Result from task2: {task2.Result}");
     }
 }
 ```
-
-#### Explanation:
-- **Task.Run**: Creates and starts a new task. The action inside `Task.Run` will be executed asynchronously.
-- **await task**: Ensures that the main thread waits for the asynchronous task to complete before continuing with other code.
-
-### Task Types:
-1. **`Task`**: Represents an operation that does not return a result (void-like).
-2. **`Task<T>`**: Represents an operation that returns a result of type `T`.
-
-
-### Task Methods:
-- **`Task.WhenAny`**: Waits for any of the provided tasks to complete.
-- **`Task.WhenAll`**: Waits for all of the provided tasks to complete.
-- **`Task.Delay`**: Creates a task that completes after a specified delay (useful for simulating timeouts or delays in asynchronous methods).
 
 
 ## What is the difference between **Task.Run** and **Thread.Start**?
@@ -696,7 +768,7 @@ class Program
 | **Abstraction Level**  | High-level abstraction (part of Task Parallel Library - TPL).                | Low-level construct for directly managing threads.                  |
 | **Ease of Use**        | Easier to use, integrates well with `async/await`.                          | Requires manual thread management.                                  |
 | **Performance**        | Uses Thread Pool (efficient thread reuse).                                  | Creates a new OS thread each time (more resource-intensive).         |
-| **Return Type**        | Returns a `Task`, supports results, chaining, and exception handling.        | Returns `void`, no direct support for results or exceptions.         |
+| **Return Type**        | Returns a `Task`, supports results, and exception handling.        | Returns `void`, no direct support for results or exceptions.         |
 | **Use Cases**          | Best for CPU-bound or asynchronous work, with chaining or awaiting results. | Suitable for long-running operations or low-level thread control.    |
 | **Thread Management**  | Managed by the runtime, no need to manually manage lifecycle.                | Requires explicit thread lifecycle management.                       |
 
