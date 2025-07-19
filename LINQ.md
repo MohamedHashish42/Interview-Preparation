@@ -1,4 +1,3 @@
-
 # Language Integrated Query (LINQ)
 
 - [What Is **Linq**?](#what-is-linq)
@@ -6,7 +5,7 @@
 - [What is the difference between **Deferred** and **Immediate** execution?](#what-is-the-difference-between-deferred-and-immediate-execution)
 - [What are the two main syntax styles to write LINQ queries?](#what-are-the-two-main-syntax-styles-to-write-linq-queries)
 - [What is the difference between **LINQ GroupBy** and **SQL GROUP BY**?](#what-is-the-difference-between-linq-groupby-and-sql-group-by)
-- [What is the difference between **Any**, **All**, and **Contain**?](#what-is-the-difference-between-any-all-and-contain)
+- [What is the difference between **Any**, **All**, and **Contains**?](#what-is-the-difference-between-any-all-and-contains)
 - [What is the difference between **Select** and **SelectMany**?](#what-is-the-difference-between-select-and-selectmany)
 - [What is the difference between **First**, **FirstOrDefault**, **Single**, and **SingleOrDefault**?](#what-is-the-difference-between-first-firstordefault-single-and-singleordefault)
 - [What is **ToLookup** in LINQ, and how is it different from **GroupBy**?](#what-is-tolookup-in-linq-and-how-is-it-different-from-groupby)
@@ -24,13 +23,13 @@ The Result of Linq Query can be:
 ## What is the difference between **IEnumerable** and **IQueryable**?
 | **Feature**               | **IEnumerable**       | **IQueryable**                                      |
 |---------------------------|-----------------------|-----------------------------------------------------|
-| **Namespace**             | `System.Collections.Generic` | `System.Linq`                   |
-| **Purpose**               | For in-memory, forward-only iteration of a collection.  | For querying data from out-of-memory sources like databases. |
-| **Execution**             | Deferred but always executed in-memory.   | Deferred but executed on the data source (e.g., SQL Server). |
-| **Support Lazy Loading**             | No.   | Yes. |
+| **Namespace**             | `System.Collections.Generic` | `System.Linq`            |
+| **Execution**             | Deferred but always executed in-memory(client-side).   | Deferred but executed on the data source (e.g., SQL Server).(server-side). |
 | **Query Processing**      | Processes the query in memory after retrieving all data.   | Translates queries into the data source's query language (e.g., SQL). |
-| **Use Case**              | Small or already-loaded data sets.                         | Large datasets or querying external data sources.          |
-| **Performance**           | Less efficient for filtering/operations on large datasets. | More efficient because filtering happens at the data source. |                            |
+| **Support Lazy Loading**  | No.   | Yes. |
+| **Performance**           | Less efficient for filtering/operations on large datasets. | More efficient because filtering happens at the data source. |     
+| **Purpose**               | In-memory data.  | For querying data from out-of-memory sources like databases. |
+| **Use Case**              | Small or already-loaded data sets.                         | Large datasets from external data sources.          |                 |
 | **Example**               | Iterating over an in-memory `List<T>` or `Array`.          | Querying a database using Entity Framework or LINQ to SQL. |
 
 ### Example
@@ -42,7 +41,7 @@ The Result of Linq Query can be:
    var courses = coursesQuery.ToList();
 ```
 #### Example breakdowns
-- in this example the execution happens only when you call `.ToList()`;
+- In this example the execution happens only when you call `.ToList()`;
 - this part will run **on server side**  
   `dbContext.Courses` is translated into a query and executed on the database.   
   ```csharp
@@ -146,9 +145,6 @@ In LINQ, there are **two main syntaxes** for writing queries:
       - Diana
     ```
 
-- **SQL Equivalent**: No equivalent without aggregation, as SQL requires an aggregate function or only the grouped column.
-
-
 
 #### 2. **Grouping Data With Aggregation**
 - **LINQ Example**: Groups and aggregates explicitly.
@@ -184,7 +180,7 @@ In LINQ, there are **two main syntaxes** for writing queries:
    B    |   2
   ```
 
-## What is the difference between **Any**,  **All** and **Contain**? 
+## What is the difference between **Any**,  **All** and **Contains**? 
 
 | Feature                | `Any`                                    | `All`                                  | `Contains`                              |
 |------------------------|-------------------------------------------|-----------------------------------------|-------------------------------------------|
@@ -210,15 +206,15 @@ Sure! Here is the transposed version of the table:
 |-------------------------|----------------------------------------------------|----------------------------------------------------------|----------------------------------------------------|-----------------------------------------------------|
 | **Description**         | Returns the **first element** that matches the condition. | Returns the **first element** that matches the condition or **default value**  if no match. | Returns **the only element** that matches a specified condition. | Returns **the only element** that matches a specified condition or **default value** if no match. |
 | **Behavior on No Match** | Throws an **exception**.                          | Returns **default value**.                                | Throws an **exception**.                            | Returns **default value**.                           |
-| **Behavior on Multiple Matches** | Returns **first** matching element.            | Returns **first** matching element.                      | Throws an **exception** if more than one element matches. | Throws an **exception** if more than one element matches. |
+| **Behavior on Multiple Matches** | Returns **first** matching element.            | Returns **first** matching element.                      | Throws an **exception**. | Throws an **exception** . |
 
 ## What is `ToLookup` in LINQ, and how is it different from `GroupBy`?
-ToLookup and GroupBy in LINQ both group elements based on a key, but they differ in key ways:
+**ToLookup** and **GroupBy** in LINQ both group elements based on a key, but they differ in key ways:
 
 | Feature              | **`ToLookup`**                                    | **`GroupBy`**                                      |
 |-----------------------|-----------------------------------------------------|-----------------------------------------------------|
 | **Execution**      | Immediate                                               | Deferred                                                |
-| **Return Type**  | **`ILookup<TKey, TElement>`**.            |  **`IEnumerable<IGrouping<TKey, TElement>>`**. ||
+| **Return Type**  | **`ILookup<TKey, TElement>`**.            |  **`IEnumerable<IGrouping<TKey, TElement>>`**. |
 | **Mutability**          | Read-only                              | Allows query transformations |
 | **Best For**            | Key-based access to grouped elements   | Complex grouping with additional processing |
 | **Example Access**      | `lookupGroup['a']`                          | `groupByGroup.Where(g => g.Key == 'a')`|
