@@ -310,7 +310,7 @@ and **returns a result of type `TResult`**.
 ```csharp
 // Represents a function that takes two integers and returns their sum
 Func<int, int, int> addFunction = (a, b) => a + b;
-int result = addFunction(3, 5); // return 8
+int result = addFunction(3, 5); // Output: 8
 ```
 
 ### **Predicate <T>**
@@ -360,7 +360,7 @@ Here’s an example of how you can achieve this:
      }
     ```
   
-2. **Wit Using**  
+2. **With Using**  
    **`using` statement** is used to ensure that `Dispose` is called automatically, improving code safety and readability.  
 
    ```csharp
@@ -485,7 +485,7 @@ Tuples are useful for **temporary data structures** and **methods that need to r
 ```csharp
 // Creating a tuple with two elements
 var person = Tuple.Create("Mohamed", 30);
-Console.WriteLine(person.Item1); // Output: John
+Console.WriteLine(person.Item1); // Output: Mohamed
 Console.WriteLine(person.Item2); // Output: 30
 ```
 
@@ -493,12 +493,12 @@ Console.WriteLine(person.Item2); // Output: 30
 ```csharp
 // Creating a named tuple
 var employee = (Name: "Ahmed", Age: 25, Position: "Developer");
-Console.WriteLine(employee.Name);   // Output: Alice
+Console.WriteLine(employee.Name);   // Output: Ahmed
 Console.WriteLine(employee.Age);    // Output: 25
 Console.WriteLine(employee.Position); // Output: Developer
 ```
 ## What is the **var** keyword? 
-InC#, **`var`** is a keyword that lets you declare a **local variable without explicitly specifying its type**, the compiler infers the type from the assigned value.
+In C#, **`var`** is a keyword that lets you declare a **local variable without explicitly specifying its type**, the compiler infers the type from the assigned value.
 
 ### Key Features of `var`:
 1. **Type Inference**:  
@@ -653,7 +653,6 @@ Instead of creating a new thread for each task, the ThreadPool **reuses existing
 
 
 ### How it Works:
-
 1. **Task Queue**: Submitted tasks are queued.
 2. **Worker Threads**: Worker threads are Idle threads that pick up tasks from the queue and execute them.
 3. **Thread Reuse**: After a task completes, the thread returns to the pool for reuse.
