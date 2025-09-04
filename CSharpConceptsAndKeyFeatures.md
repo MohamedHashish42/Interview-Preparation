@@ -75,13 +75,10 @@ class MemoryDemo
 
 ```
 ### In summary:
-- **Value types** are typically stored on the stack and hold data directly and create independent copies when assigned.  
-- **Reference types** are stored on the **heap**, while the **reference** (pointer to the object) is stored on the **stack** (for local variables) or on the **heap** (for fields inside objects), assigning one variable to another shares the same object.
-  
-
-<p align="center">
-    <img src="./RelatedDocuments/CSharp/Figures/ValueTypeVSRefType.PNG" alt="JIT">
-</p>
+| **Context**            | **Value Type**           | **Reference Type**          |
+| ---------------------- | ------------------------ | --------------------------- |
+| **Local variable**     | Stack                    | Stack (ref) + Heap (object) |
+| **Field inside class** | Heap (as part of object) | Heap (ref + object)         |
 
 
 
