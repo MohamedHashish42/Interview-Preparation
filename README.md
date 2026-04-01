@@ -13,7 +13,7 @@ Welcome to the **Interview Preparation Repository**! This repository is designed
 - [Object-Oriented Programming (OOP)](./OOP.md)
 - [SOLID Principles](./SOLID.md)
 - [Language Integrated Query (LINQ)](./LINQ.md)
-- [Web Infrastructure Basics](./WebInfrastructureBasics)  
+- [Web Infrastructure Basics](./WebInfrastructureBasics.md)  
 
 
 
