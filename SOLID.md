@@ -10,41 +10,31 @@ SOLID principles are five design principles that improve software design by maki
 ### 1. **S**ingle Responsibility Principle (SRP):
 Software entities (classes, modules) should have **only one reason to change**.
 
-A clearer way to understand the **Single Responsibility Principle (SRP)** is this:
+#### **What “one reason to change” really means?**  
 
-**Simple explanation:**
-A class (or module) should do **one job only**—and all its code should be focused on that job.
+A class should only be changed for **one specific type of responsibility or role**.
 
-**What “one reason to change” really means:**
-If you can think of **more than one type of change** that might affect a class, then it has more than one responsibility.
+In other words:
 
+> Things that change for the same reason should be kept together, and things that change for different reasons should be separated.
 
+#### **Simple example:**
 
-### 🔹 Example
+⚠️ If a class handles:
 
-❌ **Bad (violates SRP):**
-A `User` class that:
+* user data
+* database saving
+* sending emails
 
-* saves user data to the database
-* sends emails
+Then it has **multiple reasons to change** (database rules, email rules, user logic).
 
-Why is this bad?
-Because it has **multiple reasons to change**:
+✅ But if each part is separated:
 
-* Database changes → modify code
-* Email logic changes → modify code
+* User class → user data
+* Repository → database changes
+* Email service → email logic
 
----
-
-✅ **Good (follows SRP):**
-Split into separate classes:
-
-* `User` → holds user data
-* `UserRepository` → handles database
-* `EmailService` → sends emails
-
-
-Now each class has **one responsibility** and **one reason to change**.
+Then each one changes only when **its own job/role changes**.
 
 
 ### 2. **O**pen/Closed Principle (OCP)
