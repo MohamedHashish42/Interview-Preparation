@@ -1,70 +1,76 @@
 # **L**iskov Substitution Principle (LSP)
 
 
-## ⚠️ Without LSP 
+## ⚠️ LSP Violation
+```csharp
+public class Bird
+{
+    public virtual void Fly()
+    {
+        Console.WriteLine("Flying...");
+    }
+}
+
+public class Penguin : Bird
+{
+    public override void Fly()
+    {
+        throw new Exception("Penguins can't fly!");
+    }
+}
+```
 
 ```csharp
-public class Apple
-{
-    public virtual string GetColor()
-    {
-        return "Red";
-    }
-}
-
-public class Orange : Apple
-{
-    public override string GetColor()
-    {
-        return "Orange";
-    }
-}
-
-Apple apple = new Orange();
-Console.WriteLine(apple.GetColor()); // Output: Orange
+Bird bird = new Penguin();
+bird.Fly(); // 💥 Runtime Exception
 ```
 
 ### Why this violates LSP:
 
-> The `Orange` class inherits from `Apple`, suggesting that an `Orange` **is a kind of** `Apple`. This violates Liskov Substitution Principle because any code using `Apple` should safely use any derived class without unexpected behavior. But in this case, substituting `Apple` with `Orange` results in incorrect assumptions, for example, we might expect all `Apple` instances to return `"Red"` for their color.
-
+> The code assumes that every `Bird` can fly. However, `Penguin` breaks this expectation by throwing an exception.
+>
+> Substituting `Bird` with `Penguin` breaks the expected behavior and causes the program to fail, which is a clear violation of the **Liskov Substitution Principle**.
 
 
 ## ✅ With LSP (Correct Design)
 
 ```csharp
-public abstract class Fruit
+public interface IBird
 {
-    public abstract string GetColor();
+}
+
+public interface IFlyable
+{
+    void Fly();
 }
 ```
 
 ```csharp
-public class Apple : Fruit
+public class Sparrow : IBird, IFlyable
 {
-    public override string GetColor()
+    public void Fly()
     {
-        return "Red";
+        Console.WriteLine("Flying...");
     }
 }
 
-public class Orange : Fruit
+public class Penguin : IBird
 {
-    public override string GetColor()
-    {
-        return "Orange";
-    }
+    // No Fly method ✅
 }
 ```
 
 ```csharp
-Fruit fruit = new Orange();
-Console.WriteLine(fruit.GetColor()); // Output: Orange
+IFlyable bird = new Sparrow();
+bird.Fly(); // ✅ Works
 
-fruit = new Apple();
-Console.WriteLine(fruit.GetColor()); // Output: Red
+IBird penguin = new Penguin(); // ✅ Works safely
 ```
 
-### Why this adheres to LSP:
+### 💡 Why this adheres to LSP:
 
-> We now have a common abstraction (`Fruit`) and two unrelated, independent implementations (`Apple`, `Orange`). Any code working with a `Fruit` can safely operate on any subclass without relying on specific behavior or properties unique to one type.
+> We removed the incorrect assumption that all birds can fly by separating behaviors into smaller, specific interfaces.
+
+* ✅ Each class only implements behavior it actually supports
+* ✅ No subclass violates expected behavior
+* ✅ Objects can be substituted without breaking the program
