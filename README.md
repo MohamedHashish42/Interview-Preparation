@@ -14,6 +14,7 @@ Welcome to the **Interview Preparation Repository**! This repository is designed
 - [SOLID Principles](./SOLID.md)
 - [Design Patterns](./DesignPatterns.md)  
 - [Language Integrated Query (LINQ)](./LINQ.md)
+- [Entity Framework](./EntityFramework.md)
 - [Web Infrastructure Basics](./WebInfrastructureBasics.md)  
 
 
