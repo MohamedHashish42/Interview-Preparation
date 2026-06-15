@@ -8,7 +8,7 @@
 - [What is **Constructor Chaining**?](#what-is-constructor-chaining)
 - [What are **Getters** and **Setters**?](#what-are-getters-and-setters)
 - [What are **Access Modifiers**?](#what-are-access-modifiers)
-- [What is **Event**?](#what-is-event)
+- [What is an **Event**?](#what-is-an-event)
 - [What are the differences between **Inheritance** and **Composition**?](#what-are-the-differences-between-inheritance-and-composition)
 - [What is the **this** keyword?](#what-is-the-this-keyword)
 - [What is the **base** keyword?](#what-is-the-base-keyword)
@@ -36,19 +36,25 @@ The main principles of OOP are:
 It also restricts direct access to some of an object's components, which helps prevent unintended interference or misuse of the data.
 2. [**Inheritance**](./RelatedDocuments/OOP/Inheritance.md): Allowing a class to inherit properties and methods from another class.
 3. [**Polymorphism**](./RelatedDocuments/OOP/Polymorphism.md): Allowing objects of different types to be treated as instances of the same base type.
-This is commonly achieved through:  
-**Inheritance:**  
-Derived classes override  methods of a base class. For example, a Shape base class might have a Draw() method, and derived classes like Circle and Rectangle provide their specific implementations of Draw().  
-**Interfaces:**  
-Classes can implement a common interface, ensuring they all provide specific methods regardless of their internal implementation. For instance, multiple classes implementing an IDrawable interface can be used interchangeably where IDrawable is expected.  
+
+   This is commonly achieved through:
+
+   - **Inheritance**
+     
+     Derived classes override methods of a base class. For example, a `Shape` base class might have a `Draw()` method, and derived classes such as `Circle` and `Rectangle` provide their own implementations of `Draw()`.
+
+   - **Interfaces**
+     
+     Classes can implement a common interface, ensuring they all provide specific methods regardless of their internal implementation. For instance, multiple classes implementing an `IDrawable` interface can be used interchangeably wherever `IDrawable` is expected.
 
 4. [**Abstraction**](./RelatedDocuments/OOP/Abstraction.md): Hiding the complexity of the system and showing only essential features.
 
 
 ## What is the difference between **Class** and **Object**? 
-A **class** is a blueprint or template for creating objects. It defines data (properties) and behavior (methods) that the objects created from the class will have. It does not hold data itself.
 
-An **object** is an instance of a class. It holds actual data and can use the methods in defined in its class.
+A **class** is a blueprint or template for creating objects. It defines the data (properties) and behavior (methods) that objects created from the class will have. A class itself does not hold actual data.
+
+An **object** is an instance of a class. It contains actual data and can use the methods defined in its class.
 
 
 ## What is the difference between **instructor** and **destructor**?
@@ -65,8 +71,7 @@ An **object** is an instance of a class. It holds actual data and can use the me
 ## What is **Constructor Chaining**?
 Constructor chaining is a technique where one constructor calls another constructor in the same class or in a base class to reuse code and avoid duplication.
 
-### Usage 
-The **this** keyword is used to chain constructors within the same class, while **base** is used to call a constructor in a base class.
+The `this` keyword is used to chain constructors within the same class, while `base`is used to call a constructor in a base class.
 
 ### Example
 **Constructor Chaining Within the Same Class**
@@ -161,24 +166,26 @@ public class Person
 
 ## What are **access modifiers**?
 
-**Access modifiers** in C# are keywords that determine the **accessibility** of member or a type. They control which parts of the program can see or use a particular member.
+
+**Access modifiers** in C# are keywords that determine the **accessibility** of a member or a type. They control which parts of the program can access a particular member or type.
 
 ### Common Access Modifiers in C#:
 
-1. **public**:
+1. **`public`**  
    **Accessible from anywhere** in the program, including other classes and assemblies.
 
-2. **private**:
+2. **`private`**  
    **Accessible only within the same class**. It is the most restrictive access level.
 
-3. **protected**:
-   **Accessible within the same class and derived (child) classes**.
+3. **`protected`**  
+   **Accessible within the same class and by derived (child) classes**.
 
-4. **internal**:
-   **Accessible within the same assembly** but not from other assemblies.
+4. **`internal`**  
+   **Accessible only within the same assembly**.
 
-5. **protected internal**:
-   **Accessible within the same assembly or in derived classes, even if they are in different assemblies**.
+5. **`protected internal`**
+   **Accessible within the same assembly or by derived classes, even if they are in different assemblies**.
+
    ```Csharp
       public class Car 
       {
@@ -186,7 +193,7 @@ public class Person
       }
    ```
 
-6. **private protected**:
+6. **`private protected`**  
    **Accessible within the same class and by derived classes within the same assembly**.
     ```Csharp
       public class Car 
@@ -194,8 +201,11 @@ public class Person
          private protected string model;
       }
    ```
-## What is **Event**?
-An event in C# is a way for a class to notify other classes or objects when something of interest happens. Event is based on delegate which define the method signature that the event handlers (subscriber methods) must match, allowing one or more methods (event handlers) to be invoked in response to an action.
+## What is an **Event**?
+
+An event in C# is a mechanism that allows a class to notify other classes or objects when something of interest happens.
+
+An event is based on a `delegate`, which defines the method signature that event handlers (subscriber methods) must match. This allows one or more event handlers to be invoked automatically in response to an action.
 
 ### Key Features of Events:
 1. **Encapsulation:**  
@@ -213,15 +223,16 @@ An event in C# is a way for a class to notify other classes or objects when some
 public event EventHandler MyEvent;
 ```
 
-#### Note 
+#### Note
 
-In C# you can use  EventHandler or Custom Event Arguments
+In C#, you can use `EventHandler` or custom event arguments.
+
 **EventHandler:**  
-   - Standard delegate type for events.
-   - Signature: `void Handler(object sender, EventArgs e)`
+- **Standard delegate type** for events.  
+- Signature: `void Handler(object sender, EventArgs e)`
 
 **Custom Event Arguments:**  
-   To pass additional data with events, use a custom class inheriting from `EventArgs`:
+To pass additional data with events, you can create a custom class that inherits from `EventArgs`.
 
 #### Raising an Event:
 ```csharp
@@ -247,7 +258,7 @@ publisher.MyEvent -= SubscriberMethod;
 [Event Examples](./RelatedDocuments/OOP/Event.md) 
 
 ## What are the differences between **Inheritance** and **Composition**?
-Inheritance and composition are two fundamental ways to achieve code reuse and establish relationships between classes in object-oriented programming, but they follow different approaches
+**Inheritance** and **Composition** are two fundamental ways to achieve code reuse and establish relationships between classes in object-oriented programming, but they follow different approaches
 
 I'll convert the key differences into a clear table format: 
 
@@ -256,8 +267,8 @@ I'll convert the key differences into a clear table format:
 | Relationship Type | "is-a" relationship (Dog is an Animal) | "has-a" relationship (Car has an Engine) |
 | Coupling | Tight coupling between parent and child classes | Loose coupling with more flexibility |
 | Extensibility | Limited to single inheritance (no multiple inheritance in C#) | Can include multiple objects of different types |
-| Code Reuse | Child class reuses and can override parent's behavior | Class reuses behavior by delegating to contained objects |
-| Runtime Behavior | Cannot change parent class at runtime | Can change composed objects at runtime (good for dependency injection) |
+| Code Reuse | Child class reuses and can override parent behavior | Class reuses behavior by delegating to contained objects |
+| Runtime Behavior | Cannot change parent class at runtime | Can change composed objects at runtime (useful for dependency injection) |
 
 ### Inheritance Example
 ```csharp
@@ -333,7 +344,7 @@ public class Car
 
 
 ## What is the **this** keyword?
-The **this** keyword in C# is a reference to the current instance of the class.  
+The `this` keyword in C# is a reference to the current instance of the class.  
 It is used within a class to refer to the instance members (fields, methods, properties, or constructors) of that class.
 
 
@@ -342,7 +353,7 @@ It is used within a class to refer to the instance members (fields, methods, pro
 2. **Constructor Chaining**: It can be used to call another constructor in the same class, enabling constructor chaining.
 3. **Pass Current Instance**: It can be passed as an argument to other methods or constructors to refer to the current object.
 ## What is the **base** keyword?
-The **base** keyword in C# is used to access members of the **base class** from within a **derived class**.
+The `base` keyword in C# is used to access members of the **base class** from within a **derived class**.
 
 ### Key Points:
 1. **Access Base Class Members**: The `base` keyword allows a derived class to refer to members of its base class.
@@ -360,7 +371,7 @@ The `static` modifier in C# is used to declare members that belong to the type i
  ```
 
 ## What is the **virtual** modifier?
-The virtual keyword is used to declare a method, property, indexer, or event in a base class that can be overridden in derived classes.
+The `virtual` keyword is used to declare a method, property, indexer, or event in a base class that can be overridden in derived classes.
 
 This enables **polymorphism**, allowing a derived class to provide a different implementation of the method or member.
 
@@ -370,7 +381,7 @@ This enables **polymorphism**, allowing a derived class to provide a different i
 - Derived classes do not have to override a `virtual` member; they can use the base class implementation.
 
 ## What is the **abstract** modifier?
-The **abstract** modifier is used to define incomplete classes and methods that serve as a blueprint for other classes.   
+The `abstract`  modifier is used to define incomplete classes and methods that serve as a blueprint for other classes.   
 An abstract class cannot be instantiated on its own, and any method marked as abstract must be implemented by derived (subclassed) classes.
 
 
