@@ -4,25 +4,25 @@
 
 - [What is **OOP** and What are its four pillars](#what-is-oop-and-what-are-its-four-pillars)
 - [What is the difference between **Class** and **Object**?](#what-is-the-difference-between-class-and-object)
-- [What is the difference between **Instructor** and **Destructor**?](#what-is-the-difference-between-instructor-and-destructor)
+- [What is the difference between **Constructor** and **Destructor**?](#what-is-the-difference-between-instructor-and-destructor)
 - [What is **Constructor Chaining**?](#what-is-constructor-chaining)
 - [What are **Getters** and **Setters**?](#what-are-getters-and-setters)
 - [What are **Access Modifiers**?](#what-are-access-modifiers)
-- [What is an **Event**?](#what-is-an-event)
-- [What are the differences between **Inheritance** and **Composition**?](#what-are-the-differences-between-inheritance-and-composition)
 - [What is the **this** keyword?](#what-is-the-this-keyword)
 - [What is the **base** keyword?](#what-is-the-base-keyword)
-- [What is the **static** modifier?](#what-is-the-static-modifier)
-- [What is the **virtual** modifier?](#what-is-the-virtual-modifier)
-- [What is the **abstract** modifier?](#what-is-the-abstract-modifier)
-- [What is the difference between **virtual** and **abstract**?](#what-is-the-difference-between-virtual-and-abstract)
-- [What is the **sealed** modifier?](#what-is-the-sealed-modifier)
-- [What are the **is** and **as** keywords?](#what-are-the-is-and-as-keywords)
+- [What are the differences between **Inheritance** and **Composition**?](#what-are-the-differences-between-inheritance-and-composition)
 - [What are **Downcasting** and **Upcasting**?](#what-are-downcasting-and-upcasting)
 - [What is the **Method Signature**?](#what-is-the-method-signature)
 - [What is the **Method Overloading**?](#what-is-the-method-overloading)
 - [What is the **Method Overriding**?](#what-is-the-method-overriding)
+- [What is the **virtual** modifier?](#what-is-the-virtual-modifier)
+- [What is the **abstract** modifier?](#what-is-the-abstract-modifier)
+- [What is the **sealed** modifier?](#what-is-the-sealed-modifier)
+- [What is the difference between **virtual** and **abstract**?](#what-is-the-difference-between-virtual-and-abstract)
 - [What is the difference between **abstract class** and **interface**?](#what-is-the-difference-between-abstract-class-and-interface)
+- [What is an **Event**?](#what-is-an-event)
+- [What is the **static** modifier?](#what-is-the-static-modifier)
+- [What are the **is** and **as** keywords?](#what-are-the-is-and-as-keywords)
 
 
 
@@ -57,7 +57,7 @@ A **class** is a blueprint or template for creating objects. It defines the data
 An **object** is an instance of a class. It contains actual data and can use the methods defined in its class.
 
 
-## What is the difference between **instructor** and **destructor**?
+## What is the difference between **Constructor** and **destructor**?
 **Constructor**:
 - A special method in a class used to initialize objects.
 - It is automatically called when an object is created.
@@ -166,8 +166,9 @@ public class Person
 
 ## What are **access modifiers**?
 
-
-**Access modifiers** in C# are keywords that determine the **accessibility** of a member or a type. They control which parts of the program can access a particular member or type.
+**Access modifiers** in C# are keywords that control the **accessibility** of a **member** or a **type**.
+> * A **type** is such as a class, struct, enum.
+> * A **member** is something declared inside a type, such as a field, property, method.
 
 ### Common Access Modifiers in C#:
 
@@ -201,61 +202,26 @@ public class Person
          private protected string model;
       }
    ```
-## What is an **Event**?
 
-An event in C# is a mechanism that allows a class to notify other classes or objects when something of interest happens.
+## What is the **this** keyword?
+The `this` keyword in C# is a reference to the current instance of the class.  
+It is used within a class to refer to the instance members (fields, methods, properties, or constructors) of that class.
 
-An event is based on a `delegate`, which defines the method signature that event handlers (subscriber methods) must match. This allows one or more event handlers to be invoked automatically in response to an action.
 
-### Key Features of Events:
-1. **Encapsulation:**  
-   Events provide a mechanism for classes to expose notifications without revealing the internal logic.
+### Key Points:
+1. **Access Instance Members**: The `this` keyword is used to distinguish between instance members and parameters or local variables with the same name.
+2. **Constructor Chaining**: It can be used to call another constructor in the same class, enabling constructor chaining.
+3. **Pass Current Instance**: It can be passed as an argument to other methods or constructors to refer to the current object.
    
-2. **Publisher-Subscriber Model:**  
-   - A **publisher** defines an event and decides when to raise it.
-   - **Subscribers** (other objects) attach their methods (event handlers) to handle the event.
+   
+## What is the **base** keyword?
+The `base` keyword in C# is used to access members of the **base class** from within a **derived class**.
 
-### Syntax:
+### Key Points:
+1. **Access Base Class Members**: The `base` keyword allows a derived class to refer to members of its base class.
+2. **Constructor Chaining**: It is commonly used to call a constructor of the base class when creating an instance of a derived class.
+3. **Method Overriding**: It can be used within an overridden method to call the base class implementation of that method.
 
-#### Declaring an Event:
-
-```csharp
-public event EventHandler MyEvent;
-```
-
-#### Note
-
-In C#, you can use `EventHandler` or custom event arguments.
-
-**EventHandler:**  
-- **Standard delegate type** for events.  
-- Signature: `void Handler(object sender, EventArgs e)`
-
-**Custom Event Arguments:**  
-To pass additional data with events, you can create a custom class that inherits from `EventArgs`.
-
-#### Raising an Event:
-```csharp
-protected virtual void OnMyEvent()
-{
-    MyEvent?.Invoke(this, EventArgs.Empty);
-}
-```
-
-#### Subscribing to an Event:
-Other classes can subscribe to the event:
-```csharp
-publisher.MyEvent += SubscriberMethod;
-```
-
-#### Unsubscribing from an Event:
-To detach a method:
-```csharp
-publisher.MyEvent -= SubscriberMethod;
-```
-
-### Examples
-[Event Examples](./RelatedDocuments/OOP/Event.md) 
 
 ## What are the differences between **Inheritance** and **Composition**?
 **Inheritance** and **Composition** are two fundamental ways to achieve code reuse and establish relationships between classes in object-oriented programming, but they follow different approaches
@@ -270,169 +236,9 @@ I'll convert the key differences into a clear table format:
 | Code Reuse | Child class reuses and can override parent behavior | Class reuses behavior by delegating to contained objects |
 | Runtime Behavior | Cannot change parent class at runtime | Can change composed objects at runtime (useful for dependency injection) |
 
-### Inheritance Example
-```csharp
-public class Animal
-{
-    public void Eat() => Console.WriteLine("Eating...");
-}
 
-public class Dog : Animal // Dog is an Animal
-{
-    public void Bark() => Console.WriteLine("Barking...");
-}
-```
-
-### Composition Example
- **Concrete Composition or Direct Composition (Tightly Coupled)**
-```csharp
-public class Engine
-{
-    public void Start() => Console.WriteLine("Engine started...");
-}
-
-public class Car // Car has an Engine
-{
-    private Engine _engine = new Engine();
-
-    public void StartCar()
-    {
-        _engine.Start();
-        Console.WriteLine("Car started...");
-    }
-}
-```
-
-or
-
-**Interface-Based Composition (Loosely Coupled)**  
-
-```csharp
-
-public interface IEngine
-{
-    void Start();
-}
-
-
-public class GasolineEngine : IEngine
-{
-    public void Start() => Console.WriteLine("Gasoline engine started...");
-}
-
-public class ElectricEngine : IEngine
-{
-    public void Start() => Console.WriteLine("Electric motor powered up...");
-}
-
-public class Car
-{
-    private readonly IEngine _engine;
-
-    public Car(IEngine engine)
-    {
-        _engine = engine;
-    }
-
-    public void StartCar()
-    {
-        _engine.Start();
-        Console.WriteLine("Car started...");
-    }
-}
-```
-
-
-## What is the **this** keyword?
-The `this` keyword in C# is a reference to the current instance of the class.  
-It is used within a class to refer to the instance members (fields, methods, properties, or constructors) of that class.
-
-
-### Key Points:
-1. **Access Instance Members**: The `this` keyword is used to distinguish between instance members and parameters or local variables with the same name.
-2. **Constructor Chaining**: It can be used to call another constructor in the same class, enabling constructor chaining.
-3. **Pass Current Instance**: It can be passed as an argument to other methods or constructors to refer to the current object.
-## What is the **base** keyword?
-The `base` keyword in C# is used to access members of the **base class** from within a **derived class**.
-
-### Key Points:
-1. **Access Base Class Members**: The `base` keyword allows a derived class to refer to members of its base class.
-2. **Constructor Chaining**: It is commonly used to call a constructor of the base class when creating an instance of a derived class.
-3. **Method Overriding**: It can be used within an overridden method to call the base class implementation of that method.
-
-## What is the **static** modifier?
-The `static` modifier in C# is used to declare members that belong to the type itself rather than to any specific instance of the type. 
-
- Static members are shared across all instances of a class, meaning there's only one copy in memory. This is useful for resources or operations that need to be common for all instances, such as configuration settings or utility functions.
-
- ```csharp
-   var Date = DateTime.Now; //(Now) is static member
-   Console.WriteLine(); //(WriteLine) is static member
- ```
-
-## What is the **virtual** modifier?
-The `virtual` keyword is used to declare a method, property, indexer, or event in a base class that can be overridden in derived classes.
-
-This enables **polymorphism**, allowing a derived class to provide a different implementation of the method or member.
-
-### Key Points:
--  Declaring a member as `virtual` means that it can be overridden in any derived class using the `override` keyword.
-- The `virtual` member must have a definition in the base class.
-- Derived classes do not have to override a `virtual` member; they can use the base class implementation.
-
-## What is the **abstract** modifier?
-The `abstract`  modifier is used to define incomplete classes and methods that serve as a blueprint for other classes.   
-An abstract class cannot be instantiated on its own, and any method marked as abstract must be implemented by derived (subclassed) classes.
-
-
-## What is the difference between **virtual** and **abstract**?
-| Aspect | `virtual` | `abstract` |
-|---------|-----------|------------|
-| Implementation | Must have a default implementation | Cannot have an implementation |
-| Overriding | Optional - derived classes may override | Mandatory - derived classes must override |
-| Class Type | Can be in any class | Can only be in abstract classes |
-| Object Creation | Class can be instantiated | Class cannot be instantiated |
-| Usage Scenario | When default behavior is needed but might be overridden | When derived classes must implement their own behavior |
-| Need for 'override' keyword | Yes, when overriding | Yes, when implementing |
-| Can be sealed | Yes | No |
-| Method Example | `virtual void Start() { /* code */ }` | `abstract void Start();` |
-| Base Class Example | `class Animal { }` | `abstract class Animal { }` |
-## What is the **sealed** modifier?
-**sealed** is used to  prevents inheritance of a class or prevents further overriding of a method.
-
-## What are the **is** and **as** keywords?
-The `is` and `as` keywords in C# are used for type checking and safe type casting.
-
-### `is` Keyword:
-- **Purpose**: Checks if an object is of a specified type.
-- **Usage**: Returns `true` if the object is of the specified type; otherwise, `false`.
-- **Example**:
-    ```csharp
-    object obj = "Hello, World!";
-    if (obj is string)
-    {
-        Console.WriteLine("The object is a string.");
-    }
-    ```
-
-### `as` Keyword:
-- **Purpose**: Performs a **safe cast** of an object to a specified type.  
-       **Safe casting** means converting an object to a specified type without causing an exception if the conversion fails. Instead of throwing an exception, safe casting will return a null reference.
-- **Usage**: Returns the object cast to the specified type if the cast is valid; otherwise, it returns `null` without throwing an exception.
-- **Example**:
-    ```csharp
-    object obj = "Hello, World!";
-    string str = obj as string;
-
-    if (str != null)
-    {
-        Console.WriteLine("The object was successfully cast to a string.");
-    }
-    else
-    {
-        Console.WriteLine("The object is not a string.");
-    }
-    ```
+### Examples
+[Event Examples](./RelatedDocuments/OOP/InheritanceAndComposition.md) 
 
 ## What are **Downcasting** and **Upcasting**?
 **Upcasting and downcasting** are concepts in object-oriented programming related to type conversion within an inheritance hierarchy. 
@@ -481,6 +287,7 @@ Some time we can get an `InvalidCastException` if the object is not of the corre
       myDog.Bark();
   }
   ```
+
 ## What is the **Method Signature**?
 A **method signature** in C# refers to the unique identity of a method. It includes:
 
@@ -493,7 +300,9 @@ A **method signature** in C# refers to the unique identity of a method. It inclu
 
 ## What is the **Method Overloading**?
 
-Method overloading is a feature that allows a class to have multiple methods with the same name but different parameter lists (i.e., different type, number, or order of parameters). This allows methods to perform similar functions but with different types of input.
+**Method overloading** is a feature in C# that allows a class to define **multiple methods** with the **same name** but **different parameter lists** (different number, types, or order of parameters).   
+This allows the same operation to be performed using different sets of arguments.
+
 
 ## What is the **Method Overriding**?
 
@@ -506,14 +315,156 @@ Method overloading is a feature that allows a class to have multiple methods wit
   - The method in the derived class must be marked with the `override` keyword.
 - **Run-time Polymorphism**: Method overriding is an example of run-time (or dynamic) polymorphism.
 
+
+## What is the **virtual** modifier?
+The `virtual` keyword is used to declare a method, property, indexer, or event in a base class that can be overridden in derived classes.
+
+This enables **polymorphism**, allowing a derived class to provide a different implementation of the method or member.
+
+### Key Points:
+-  Declaring a member as `virtual` means that it can be overridden in any derived class using the `override` keyword.
+- The `virtual` member must have a definition in the base class.
+- Derived classes do not have to override a `virtual` member; they can use the base class implementation.
+
+## What is the **abstract** modifier?
+The `abstract`  modifier is used to define incomplete classes and methods that serve as a blueprint for other classes.   
+An abstract class cannot be instantiated on its own, and any method marked as abstract must be implemented by derived (subclassed) classes.
+
+## What is the **sealed** modifier?
+`sealed` is used to  prevents inheritance of a class or prevents further overriding of a method.
+
+### Examples
+[Sealed Examples](./RelatedDocuments/OOP/Sealed.md) 
+
+## What is the difference between **virtual** and **abstract**?
+| Aspect | `virtual` | `abstract` |
+|---------|-----------|------------|
+| Implementation | Must have a default implementation | Cannot have an implementation |
+| Overriding | Optional - derived classes may override | Mandatory - derived classes must override |
+| Class Type | Can be in any class | Can only be in abstract classes |
+| Object Creation | Class can be instantiated | Class cannot be instantiated |
+| Usage Scenario | When default behavior is needed but might be overridden | When derived classes must implement their own behavior |
+| Need for 'override' keyword | Yes, when overriding | Yes, when implementing |
+| Can be sealed | Yes | No |
+| Method Example | `virtual void Start() { /* code */ }` | `abstract void Start();` |
+| Base Class Example | `class Animal { }` | `abstract class Animal { }` |
+
+
 ## What is the difference between **abstract class** and **interface**? 
 | Feature                     | **Abstract Class**                                     | **Interface**                                    |
 |-----------------------------|-------------------------------------------------------|--------------------------------------------------|
 | **Declaration**              | `abstract` keyword                                   | `interface` keyword                              |
-| **Methods**                  | Can have both method declaration and implementation parts | Can only have method declarations (C# 8.0+ allows default implementations) |
+| **Methods**                  | Can have both method declaration and implementation parts | Can contain method declarations and, since C# 8.0, default method implementations |
 | **Fields/Properties**        | Can have fields, properties, and methods              | Cannot have fields (only properties and methods)  |
-| **Multiple Inheritance**     | A class can inherit from only **one** class.| A class can implement multiple interfaces         |
+| **Multiple Inheritance**     | A class can inherit from only **one** class.| A class can implement **multiple** interfaces         |
 | **Constructors**             | Can have constructors      | Cannot have constructors                          |
 | **Access Modifiers**         | Members can have different types of access modifiers | All members are implicitly `public`               |
 | **When to Use**              | Use when classes share common method implementations | Use when only behavior (no implementation) needs to be defined |
-| **Example**                  | ```abstract class Animal { public abstract void Speak(); public void Eat() { } }``` | ```interface IAnimal { void Speak(); }``` |
+
+
+## What is an **Event**?
+
+An event in C# is a mechanism that allows a class to notify other classes or objects when something of interest happens.
+
+An event is based on a `delegate`, which defines the method signature that event handlers (subscriber methods) must match. This allows one or more event handlers to be invoked automatically in response to an action.
+
+### Key Features of Events:
+1. **Encapsulation:**  
+   Events provide a mechanism for classes to expose notifications without revealing the internal logic.
+   
+2. **Publisher-Subscriber Model:**  
+   - A **publisher** defines an event and decides when to raise it.
+   - **Subscribers** (other objects) attach their methods (event handlers) to handle the event.
+
+### Syntax:
+
+#### Declaring an Event:
+
+```csharp
+public event EventHandler MyEvent;
+```
+
+#### Note
+
+In C#, you can use `EventHandler` or **Custom Event Arguments**.
+
+1. **EventHandler:**  
+   - **Standard delegate type** for events.  
+   - Signature: `void Handler(object sender, EventArgs e)`
+
+2. **Custom Event Arguments:**  
+To pass additional data with events, you can create a custom class that inherits from `EventArgs`.
+
+#### Raising an Event:
+```csharp
+protected virtual void OnMyEvent()
+{
+    MyEvent?.Invoke(this, EventArgs.Empty);
+}
+```
+
+#### Subscribing to an Event:
+Other classes can subscribe to the event:
+```csharp
+publisher.MyEvent += SubscriberMethod;
+```
+
+#### Unsubscribing from an Event:
+To detach a method:
+```csharp
+publisher.MyEvent -= SubscriberMethod;
+```
+
+### Examples
+[Event Examples](./RelatedDocuments/OOP/Event.md) 
+
+
+
+## What is the **static** modifier?
+The `static` modifier in C# is used to declare members that belong to the type itself rather than to any specific instance of the type. 
+
+ Static members are shared across all instances of a class, meaning there's only one copy in memory. This is useful for resources or operations that need to be common for all instances, such as configuration settings or utility functions.
+
+ ```csharp
+   var Date = DateTime.Now; //(Now) is static member
+   Console.WriteLine(); //(WriteLine) is static member
+ ```
+
+
+
+## What are the **is** and **as** keywords?
+
+The `is` keyword in C# is used for **type checking**
+The `as` keyword in C# is used for **safe casting**.
+
+### `is` Keyword:
+- **Purpose**: Checks if an object is of a specified type.
+- **Usage**: Returns `true` if the object is of the specified type; otherwise, `false`.
+- **Example**:
+    ```csharp
+    object obj = "Hello, World!";
+    if (obj is string)
+    {
+        Console.WriteLine("The object is a string.");
+    }
+    ```
+
+### `as` Keyword:
+- **Purpose**: Performs a **safe cast** of an object to a specified type.  
+       **Safe casting** means converting an object to a specified type without causing an exception if the conversion fails. Instead of throwing an exception, safe casting will return a null reference.
+- **Usage**: Returns the object cast to the specified type if the cast is valid; otherwise, it returns `null` without throwing an exception.
+- **Example**:
+    ```csharp
+    object obj = "Hello, World!";
+    string str = obj as string;
+
+    if (str != null)
+    {
+        Console.WriteLine("The object was successfully cast to a string.");
+    }
+    else
+    {
+        Console.WriteLine("The object is not a string.");
+    }
+    ```
+

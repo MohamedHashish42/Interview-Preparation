@@ -117,9 +117,16 @@ Event handled by Subscriber. Message: Hello from custom event!
 
 
 ## 3. **More Practical Example**
-Suppose we have a Student class that contains an event, StatusChanged, which is triggered whenever the student's status changes. This class includes a property Status, which, when set to a new value, checks if the value differs from the current one. If the status is different, it triggers the OnStatusChanged method, which raises the event to notify any subscribers.
+Suppose we have a `Student` class that contains an event, `StatusChanged`, which is triggered whenever the student's status changes.
 
-In this scenario, we have two subscribers: the Accounting class and the Transportation class. Both of these classes listen for the StatusChanged event and implement their respective handlers (OnStudentStatusChanged). 
+This class includes a property `Status`, which, when set to a new value, checks whether the value differs from the current one. If the status is different, it triggers the `OnStatusChanged` method, which raises the event to notify any subscribers.
+
+In this scenario, we have two subscribers:
+
+- The `Accounting` class  
+- The `Transportation` class  
+
+Both of these classes listen for the `StatusChanged` event and implement their respective handlers (`OnStudentStatusChanged`).
 
 ### Event Publisher:
 ```csharp
