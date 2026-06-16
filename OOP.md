@@ -238,7 +238,7 @@ I'll convert the key differences into a clear table format:
 
 
 ### Examples
-[Event Examples](./RelatedDocuments/OOP/InheritanceAndComposition.md) 
+[Inheritance and Composition Examples](./RelatedDocuments/OOP/InheritanceAndComposition.md) 
 
 ## What are **Downcasting** and **Upcasting**?
 **Upcasting and downcasting** are concepts in object-oriented programming related to type conversion within an inheritance hierarchy. 
