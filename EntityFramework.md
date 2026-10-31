@@ -7,13 +7,13 @@
 - [What Are the Main Approaches **(Code First, Database First, and Model First)** to Using Entity Framework?](#what-are-the-main-approaches-code-first-database-first-and-model-first-to-using-entity-framework)
 - [What is **DbContext** in Entity Framework?](#what-is-dbcontext-in-entity-framework)
 - [How to Override Configuration in Entity Framework?](#how-to-override-configuration-in-entity-framework)
-- [What Are Delete Behaviors (Cascade, Restrict, SetNull, NoAction) in EF Core?](#what-are-delete-behaviors-cascade-restrict-setnull-noaction-in-ef-core)
+- [What Are **Delete Behaviors (Cascade, Restrict, SetNull)** in EF Core?](#what-are-delete-behaviors-cascade-restrict-setnull-in-ef-core)
 - [What Are **Lazy Loading, Eager Loading, and Explicit Loading**?](#what-are-lazy-loading-eager-loading-and-explicit-loading)
 - [What is the **N+1** Problem in EF, and How Do You Mitigate It?](#what-is-the-n1-problem-in-ef-and-how-do-you-mitigate-it)
 - [What is the Difference Between **AsNoTracking** and **Normal Tracking** Queries in EF?](#what-is-the-difference-between-asnotracking-and-normal-tracking-queries-in-ef)
 - [What is the Difference Between **SaveChanges** and **SaveChangesAsync**?](#what-is-the-difference-between-savechanges-and-savechangesasync)
 - [What is **Migrations**?](#what-is-migrations)
-- [What is **Transaction** How Does Entity Framework Implement **it**?](#what-is-transaction-how-does-entity-framework-implement-it)
+- [What is **Transaction** and How Does Entity Framework Implement **it**?](#what-is-transaction-and-how-does-entity-framework-implement-it)
 - [What is **TransactionScopeOption** in Entity Framework?](#what-is-transactionscopeoption-in-entity-framework)
 - [What is **IsolationLevel** in Entity Framework?](#what-is-isolationlevel-in-entity-framework)
 - [What Are **Table-Per-Hierarchy (TPH)**, **Table-Per-Type (TPT)**, and **Table-Per-Concrete Class (TPC)** Inheritance Strategies in EF?](#what-are-table-per-hierarchy-tph-table-per-type-tpt-and-table-per-concrete-class-tpc-inheritance-strategies-in-ef)
@@ -23,10 +23,12 @@
 
 
 ## What Is **ORM (Object-Relational Mapper)**?
-An **ORM (Object-Relational Mapper)** is a programming technique used to interact with relational databases through object-oriented programming. It bridges the **gap** between the object-oriented world (classes, inheritance, associations) and the relational world (tables, rows, foreign keys), allowing developers to work with database data as objects without writing raw SQL queries.
+An **ORM (Object-Relational Mapper)** is a programming technique used to interact with relational databases through object-oriented programming.  
+It bridges the **gap** between the object-oriented world (classes, inheritance, associations) and the relational world (tables, rows, foreign keys), allowing developers to work with database data as objects without writing raw SQL queries.
 
 ## What Is **Entity-Framework**?
-**Entity Framework (EF)** is an open-source **ORM (Object-Relational Mapper)** framework for .NET applications supported by Microsoft. It enables developers to work with data using objects of domain specific classes without focusing on the underlying database.
+**Entity Framework (EF)** is an open-source **ORM (Object-Relational Mapper)** framework for .NET applications supported by Microsoft.  
+It enables developers to work with data using objects of domain specific classes without focusing on the underlying database.
 
 
 ### Entity Framework Features
@@ -43,14 +45,15 @@ An **ORM (Object-Relational Mapper)** is a programming technique used to interac
   EF keeps track of changes occurred to instances of your entities (Property values) which need to be submitted to the database.
 
 - **Caching**:   
-  EF includes **first-level caching** (also called the identity map) by default. Within the same `DbContext` instance, if you query an entity by its **primary key** and then query it again, EF returns the already tracked entity from memory instead of sending another query to the database. 
-**For more detail** [Caching](./RelatedDocuments/EntityFramework/Caching.md)
+  EF Core provides **first-level caching** through its Change Tracker and identity resolution mechanisms.   
+  **For more detail** [Caching](./RelatedDocuments/EntityFramework/Caching.md)
 
 - **Migrations**:
    EF supports database schema management with migration commands via NuGet Package Manager Console or CLI.
 
 - **Configuration**:   
-  Entity Framework (EF) follows a **conventions over configuration** approach, where it automatically applies a set of default rules to configure the model. However, developers can override these conventions using **data annotations** or the **Fluent API** to customize the model's configuration according to specific requirements.
+  Entity Framework (EF) follows a **conventions over configuration** approach, where it automatically applies a set of default rules to configure the model.  
+  However, developers can override these conventions using **data annotations** or the **Fluent API** to customize the model's configuration according to specific requirements.
 
 
 ## What are the main approaches **(Code First, Database First, and Model First)** to using Entity Framework?
@@ -138,7 +141,7 @@ In Entity Framework, you can override configuration using:
 - If you're working on an enterprise application it's better to just stick to Fluent API, we will have a little bit more code but you have better separation and you can configure all kind of relationships.
 
 
-## What Are **Delete Behaviors (Cascade, Restrict, SetNull, NoAction)** in EF Core?
+## What Are **Delete Behaviors (Cascade, Restrict, SetNull)** in EF Core?
 
 **Delete Behavior** in EF Core defines what happens to **dependent (child) entities** in the database when their **principal (parent) entity** is deleted. It controls how EF handles the foreign key relationship on delete.
 
@@ -148,12 +151,6 @@ In Entity Framework, you can override configuration using:
 | **Cascade**     | `ON DELETE CASCADE`    | Deletes children automatically |
 | **Restrict**    | `ON DELETE RESTRICT`   | Throws exception if children exist |
 | **SetNull**     | `ON DELETE SET NULL`   | Sets FK to `NULL` on children |
-| **NoAction**    | `ON DELETE NO ACTION`  | Does nothing deletion may fail at DB save time due to FK constraint <br> or succeed if no related rows exist|
-
-### 💡 The key difference (Restrict vs NoAction)
-
-* **Restrict** = “You are not allowed to start deleting this” 🚫
-* **NoAction** = “Go ahead… I’ll check later and fail you if needed” ⏳
 
 
 ## What are **Lazy Loading, Eager Loading and Explicit Loading**?
@@ -239,10 +236,10 @@ Here's a comparison:
 | **Performance**    | May cause N+1 query problem    | Efficient if data is needed    | Efficient for selective data  |
 
 ## What is the **N+1** problem in EF, and how do you mitigate it?
+  
+The **N+1 problem** in Entity Framework (EF) occurs when a query retrieves a collection of entities and then executes **N additional queries** to load related data for each entity individually.  
 
-The **N+1 problem** in Entity Framework (EF) occurs when a query retrieves an entity and then executes **N additional queries** to load related data for each entity. This typically happens with **Lazy Loading** when iterating over a collection of entities with related navigation properties.
-
-
+This commonly happens with **Lazy Loading** when iterating over entities and accessing their related navigation properties.
 
 ### Example of the N+1 Problem:
 ```csharp
@@ -315,7 +312,7 @@ var products = context.Products.AsNoTracking().ToList();  // No tracking
 | **State Tracking**     | Tracks changes to entities.             | No tracking; entities are detached.  |
 | **Performance**        | Slightly slower due to tracking overhead.| Faster as tracking is skipped.       |
 | **Use Case**           | Modify and save changes to entities.     | Read-only operations (e.g., reporting).|
-| **Memory Usage**       | Higher, as entities are stored in memory.| Lower, as entities are not tracked.  |
+| **Memory Usage**       | Higher, as entities are tracked.| Lower, as entities are not tracked.  |
 
 ## What is the difference between **SaveChanges** and **SaveChangesAsync**?
 
@@ -325,8 +322,7 @@ var products = context.Products.AsNoTracking().ToList();  // No tracking
 |-------------------------|-------------------------------------------|--------------------------------------------|
 | **Definition**           | A synchronous method that saves changes to the database. | An asynchronous method that saves changes to the database. |
 | **Thread Blocking**      | Blocks the calling thread until the operation completes. | Does not block the calling thread; allows it to perform other tasks while waiting for the operation to complete. |
-| **Use Case / Performance** | Best for simple or non-scalable applications where blocking the calling thread is acceptable (e.g., console apps). | Best for scalable and responsive applications (e.g., web APIs or GUI apps), improving scalability by freeing up threads during database I/O operations. |
-
+| **Use Case** | Suitable for simple applications (e.g., console apps). | Useful for scalable and responsive applications (e.g., web APIs or GUI apps), as it can improve scalability by freeing up threads during database I/O operations. |
 
 
 ---
@@ -342,8 +338,7 @@ using (var context = new AppDbContext())
 }
 ```
 
-- Blocks the thread until the changes are saved to the database.
-- Typically used in applications where scalability is not a concern.
+> Blocks the thread until the changes are saved to the database.
 
 ---
 
@@ -356,54 +351,35 @@ using (var context = new AppDbContext())
 }
 ```
 
-- Non-blocking, allows other tasks to run while waiting for the operation to complete.
-- Recommended for modern applications like web APIs or desktop apps where responsiveness is critical. 
- 
+> Non-blocking, allows other tasks to run while waiting for the operation to complete.  
+
+### **Key Difference**
+
+* `SaveChanges()` blocks the thread until the operation completes.
+* `SaveChangesAsync()` with `await` pauses the method without blocking the thread.
+
+
 ### **Important Note**
 
 At first glance, using `await` with `SaveChangesAsync()` may seem similar to synchronous code because execution pauses until the save operation finishes. However, the key difference is that the thread is **not blocked** while waiting.
 
 #### How `SaveChangesAsync()` Works with `await`
 
-1. **Calling `SaveChangesAsync()`**
-
+1. **Calling `SaveChangesAsync()`**  
    When `SaveChangesAsync()` is called, Entity Framework starts saving the changes to the database.
 
-   Since database communication is an I/O operation that may take time, the method does not keep the current thread busy while waiting for the database response.
+   Since database communication is an I/O operation that may take time, the method does not keep the current thread busy while waiting for the database response.  
 
-2. **What `await` Does**
-
+2. **What `await` Does**  
    The `await` keyword pauses the execution of the current method until the operation completes.
 
-   However, instead of blocking the thread, the runtime frees it to handle 
-   other work (such as processing additional requests in a web application) 
-   while waiting for the database response.
+   However, instead of blocking the thread, the calling thread is free to perform other work (such as processing additional requests in a web application)  while the asynchronous operation is pending.  
+   
 
-3. **When the Operation Finishes**
-
-   Once the database operation completes, execution resumes automatically from the line after `await`.
-
+3. **When the Operation Finishes**  
+   Once the database operation completes, execution resumes automatically from the line after `await`.  
    This makes the code appear sequential, even though the thread was free during the waiting period.
 
-#### Example
-
-```csharp 
-await context.SaveChangesAsync();
-
-Console.WriteLine("Changes saved");
-```
-
-In this example:
-
-* `"Changes saved"` will not execute until the save operation finishes.
-* But the thread itself is not blocked while waiting for the database response.
-
-#### Key Difference
-
-* `SaveChanges()` blocks the thread until the operation completes.
-* `SaveChangesAsync()` with `await` pauses the method without blocking the thread.
-
-That is why asynchronous code improves scalability and responsiveness, especially in web applications.
 
 ## What is **Migrations**?
 **Migrations** in Entity Framework provide a way to track and apply database schema changes as the application's data model evolves.
@@ -411,11 +387,11 @@ That is why asynchronous code improves scalability and responsiveness, especiall
 ### **Generated Migration File**:
 A migration file contains:
 1. **`Up` Method**: Defines the changes to apply (e.g., adding a table or column).
-2. **`Down` Method**: Defines how to revert the changes (e.g., dropping a table or column).
+2. **`Down` Method**: Defines how to revert the changes made by the `Up` method (e.g., dropping a table or column).
 
 ### **Benefits of Using Migrations**:
 1. **Automated Schema Changes**: Simplifies database updates as the model evolves.
-2. **Consistency**: Ensures all developers and environments have the same schema.
+2. **Consistency**: Helps keep database schemas consistent across developers and environments when migrations are applied correctly and in the proper order.
 3. **Version Control**: Provides a history of schema changes for auditing or rollback.
 4. **Customizable**: You can modify the generated migration scripts for specific requirements.
 
@@ -428,28 +404,34 @@ A migration file contains:
 | `dotnet ef migrations list`          | Lists all available migrations.                      |
 | `dotnet ef database update <name>`   | Updates the database to a specific migration.         |
 
-## What is **Transaction** How Does Entity Framework Implement **it**?
+## What is **Transaction** and How Does Entity Framework Implement **it**?
 
-Entity Framework Transactions ensure that a series of database operations are executed as a single unit of work. If any operation fails, the entire transaction is rolled back to maintain data integrity.   
- 
-Transactions can be managed automatically by Entity Framework or explicitly using `DbContext.Database.BeginTransaction()`.
+Transactions ensure that a series of database operations are executed as a single unit of work, meaning that either all operations are committed, or none of their changes are committed.
 
-**For more detail** [How does Entity Framework implement **Transactions**](./RelatedDocuments/EntityFramework/How-Does-Entity-Framework-Implement-Transactions.md)
+EF Core supports transactions through automatic transaction management, explicit database transactions, and .NET's `TransactionScope`.
+
+**For more detail** [How does Entity Framework implement **Transactions**](./RelatedDocuments/EntityFramework/HowDoesEntityFrameworkImplementTransactions.md)
 
 
 ## What is **TransactionScopeOption** in Entity Framework?
 
-**`TransactionScopeOption`** is a .NET enum that determines how a `TransactionScope` participates in transactions. It specifies whether the scope joins an existing transaction, creates a new one, or executes without a transaction.
+`TransactionScopeOption` is a .NET enum that determines how a `TransactionScope` interacts with an existing ambient transaction.  
+It specifies whether the scope joins an existing transaction, creates a new transaction, or executes without an ambient transaction.
 
-* **`Required` (default):** Joins an existing ambient transaction if one exists; otherwise, creates a new transaction.
-* **`RequiresNew`:** Always creates a new transaction, even if there is an active ambient transaction.
-* **`Suppress`:** Does not participate in any transaction, even if an ambient transaction exists.
+
+* **`Required` (default):** Join an existing transaction or create a new one.
+* **`RequiresNew`:** Always creates a new transaction.
+* **`Suppress`:** Suppress the ambient transaction.
 
 
 **For more detail** [TransactionScopeOption](./RelatedDocuments/EntityFramework/TransactionScopeOption.md)
 
 ## What is **IsolationLevel** in Entity Framework?
-**IsolationLevel** in Entity Framework determines how transactions interact with each other by controlling how data is locked and read during concurrent operations. It defines the level of isolation from other transactions to prevent issues like dirty reads, non-repeatable reads, and phantom reads.  
+
+`IsolationLevel` determines how concurrent transactions interact when reading and modifying data.   
+It controls the visibility of changes made by other transactions and helps manage concurrency issues such as dirty reads, non-repeatable reads, and phantom reads.
+
+Entity Framework Core does not implement isolation behavior itself. It relies on the underlying database engine, such as SQL Server, to enforce the selected isolation level.
 
 **For more detail** [IsolationLevel](./RelatedDocuments/EntityFramework/IsolationLevel.md)
 
